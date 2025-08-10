@@ -1014,6 +1014,9 @@ body {
   border: 1px solid #e5e7eb;
   border-top: none;
   margin-bottom: 1.5rem;
+  position: relative;
+  overflow: visible;
+  z-index: 1;
 }
 
 /* Lien "Voir plus de prestations" */
@@ -1026,7 +1029,7 @@ body {
   background: #f8f9fa;
   border-top: 1px solid #e5e7eb;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.25s ease-out;
   color: #1f2937;
   font-weight: 500;
 }
@@ -1068,9 +1071,11 @@ body {
   padding: 1.2rem 1.5rem;
   border-bottom: 1px solid #e5e7eb;
   background: white;
-  transition: background-color 0.2s ease;
+  transition: all 0.25s ease-out;
   cursor: pointer;
   min-height: 80px;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .service-item-planity:hover {
@@ -1735,7 +1740,13 @@ body {
     width: 100% !important;
     margin-bottom: 1rem !important;
     border-radius: 8px !important;
-    overflow: hidden !important;
+    overflow: visible !important;
+    position: relative !important;
+    z-index: auto !important;
+    /* Forcer l'ouverture vers le bas sur mobile */
+    transform: none !important;
+    top: auto !important;
+    bottom: auto !important;
   }
   #employees-grid {
     display: grid !important;
@@ -1964,12 +1975,33 @@ body {
     max-width: 100% !important;
     margin: 0 !important;
     padding: 0 !important;
+    /* Forcer l'affichage en flux normal */
+    position: static !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: visible !important;
+  }
+
+  /* Forcer tous les éléments de services à suivre le flux normal */
+  .services-list-planity * {
+    position: static !important;
+    transform: none !important;
+    top: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
   }
 
   .category-header-planity {
     margin-left: -0.5rem !important;
     margin-right: -0.5rem !important;
     border-radius: 0 !important;
+    position: relative !important;
+    z-index: 1 !important;
+    /* Empêcher les problèmes de positionnement */
+    transform: none !important;
+    top: auto !important;
+    bottom: auto !important;
   }
 
   .category-services-container {
@@ -1978,6 +2010,16 @@ body {
     border-radius: 0 !important;
     border-left: none !important;
     border-right: none !important;
+    /* Forcer l'affichage normal du flux de document */
+    position: static !important;
+    display: block !important;
+    flex-direction: column !important;
+    /* Empêcher tout positionnement absolu ou fixe */
+    transform: none !important;
+    top: auto !important;
+    bottom: auto !important;
+    left: auto !important;
+    right: auto !important;
   }
   .categories h2,
   .services h2,

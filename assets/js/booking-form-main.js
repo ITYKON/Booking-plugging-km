@@ -85,8 +85,13 @@ window.goToStep = function (step) {
     }
   }
 
-  // Exécuter le scroll automatique
-  scrollToProgressBar();
+  // Désactiver les scrolls automatiques pour l'étape 1 (services) pour préserver l'UX naturelle
+  window.disableAutoScroll = (step === 1);
+
+  // Exécuter le scroll automatique seulement si on n'est pas à l'étape 1 (services)
+  if (step !== 1) {
+    scrollToProgressBar();
+  }
 
   // Mettre à jour le titre de l'étape si nécessaire
   const stepTitles = {
@@ -256,8 +261,17 @@ setTimeout(() => {
 // Réajuster lors du redimensionnement
 window.addEventListener('resize', window.adjustProgressBarPosition);
 
+// Variable globale pour désactiver les scrolls automatiques pendant l'interaction avec les services
+window.disableAutoScroll = false;
+
 // Fonction utilitaire pour le scroll automatique vers la barre de progression
 window.scrollToProgressBar = function(callback, delay = 300) {
+  // Ne pas faire de scroll si désactivé (pour préserver l'UX des dropdowns)
+  if (window.disableAutoScroll) {
+    if (callback) callback();
+    return;
+  }
+
   const progressBar = document.querySelector(".planity-progress-bar") || document.querySelector(".ib-stepper-main");
   if (progressBar) {
     const isMobile = window.innerWidth <= 768;
@@ -1370,10 +1384,11 @@ window.scrollToProgressBar = function(callback, delay = 300) {
           bookingState.selectedCategory = cat;
           renderServicesGrid();
           renderCategoryButtons();
-          const servicesSection = document.getElementById("services-part");
-          if (servicesSection) {
-            servicesSection.scrollIntoView({ behavior: "smooth" });
-          }
+          // Désactivé pour préserver le comportement naturel des dropdowns
+          // const servicesSection = document.getElementById("services-part");
+          // if (servicesSection) {
+          //   servicesSection.scrollIntoView({ behavior: "smooth" });
+          // }
         };
         buttonsContainer.appendChild(btn);
       });
@@ -1470,22 +1485,20 @@ window.scrollToProgressBar = function(callback, delay = 300) {
               bookingState.selectedService = service;
               bookingState.step = 2;
 
-              // Utiliser la fonction utilitaire pour le scroll automatique
-              window.scrollToProgressBar(() => {
-                // Utiliser goToStep au lieu de renderBookingForm
-                if (typeof goToStep === "function") {
-                  goToStep(2);
-                } else {
-                  console.log(
-                    "goToStep non disponible, tentative de navigation manuelle"
-                  );
-                  // Alternative : déclencher un événement personnalisé
-                  const event = new CustomEvent("serviceSelected", {
-                    detail: { service: service, step: 2 },
-                  });
-                  document.dispatchEvent(event);
-                }
-              });
+              // Pas de scroll automatique pour préserver l'UX naturelle des dropdowns
+              // Aller directement à l'étape suivante sans scroll
+              if (typeof goToStep === "function") {
+                goToStep(2);
+              } else {
+                console.log(
+                  "goToStep non disponible, tentative de navigation manuelle"
+                );
+                // Alternative : déclencher un événement personnalisé
+                const event = new CustomEvent("serviceSelected", {
+                  detail: { service: service, step: 2 },
+                });
+                document.dispatchEvent(event);
+              }
             });
           } else {
             console.error(
@@ -1509,8 +1522,25 @@ window.scrollToProgressBar = function(callback, delay = 300) {
 
           // Ouvrir/fermer l'accordéon cliqué
           if (!isOpen) {
+            // Ouvrir l'accordéon
             accordionItem.classList.add("open");
             accordionHeader.querySelector(".accordion-arrow").textContent = "▲";
+
+            // Attendre que l'animation d'ouverture soit terminée, puis ajuster la position
+            setTimeout(() => {
+              const headerRect = accordionHeader.getBoundingClientRect();
+              const progressBar = document.querySelector('.planity-progress-bar');
+              const offset = progressBar ? progressBar.offsetHeight + 20 : 20;
+
+              // Si l'en-tête n'est pas visible ou partiellement caché, ajuster la position
+              if (headerRect.top < offset) {
+                const targetPosition = window.pageYOffset + headerRect.top - offset;
+                window.scrollTo({
+                  top: targetPosition,
+                  behavior: 'smooth'
+                });
+              }
+            }, 300); // Attendre la fin de l'animation CSS (0.25s + marge)
           }
         };
 
@@ -1580,6 +1610,17 @@ window.scrollToProgressBar = function(callback, delay = 300) {
         categoryContainer.className = "category-services-container";
         categoryContainer.setAttribute("data-category", categoryName);
 
+        // Forcer le positionnement normal sur mobile
+        if (window.innerWidth <= 768) {
+          categoryContainer.style.position = "static";
+          categoryContainer.style.transform = "none";
+          categoryContainer.style.top = "auto";
+          categoryContainer.style.bottom = "auto";
+          categoryContainer.style.left = "auto";
+          categoryContainer.style.right = "auto";
+          categoryContainer.style.zIndex = "auto";
+        }
+
         // Ajouter les services visibles de cette catégorie
         servicesToShow.forEach((srv) => {
           const serviceItem = createServiceItem(srv);
@@ -1602,7 +1643,7 @@ window.scrollToProgressBar = function(callback, delay = 300) {
             // Masquer le lien "voir plus"
             seeMoreItem.style.display = "none";
 
-            // Ajouter les services restants
+            // Ajouter les services restants (expansion naturelle comme Planity)
             services.slice(maxServicesShown).forEach((srv) => {
               const serviceItem = createServiceItem(srv);
               categoryContainer.insertBefore(serviceItem, seeMoreItem);
@@ -1630,9 +1671,45 @@ window.scrollToProgressBar = function(callback, delay = 300) {
               // Supprimer le lien "voir moins" et réafficher "voir plus"
               seeLessItem.remove();
               seeMoreItem.style.display = "flex";
+
+              // Après la contraction, s'assurer que l'en-tête de catégorie reste visible
+              setTimeout(() => {
+                const categoryHeader = categoryContainer.previousElementSibling;
+                if (categoryHeader && categoryHeader.classList.contains('category-header-planity')) {
+                  const headerRect = categoryHeader.getBoundingClientRect();
+                  const progressBar = document.querySelector('.planity-progress-bar');
+                  const offset = progressBar ? progressBar.offsetHeight + 20 : 20;
+
+                  if (headerRect.top < offset) {
+                    const targetPosition = window.pageYOffset + headerRect.top - offset;
+                    window.scrollTo({
+                      top: targetPosition,
+                      behavior: 'smooth'
+                    });
+                  }
+                }
+              }, 100);
             };
 
             categoryContainer.appendChild(seeLessItem);
+
+            // Après l'expansion, s'assurer que l'en-tête de catégorie reste visible
+            setTimeout(() => {
+              const categoryHeader = categoryContainer.previousElementSibling;
+              if (categoryHeader && categoryHeader.classList.contains('category-header-planity')) {
+                const headerRect = categoryHeader.getBoundingClientRect();
+                const progressBar = document.querySelector('.planity-progress-bar');
+                const offset = progressBar ? progressBar.offsetHeight + 20 : 20;
+
+                if (headerRect.top < offset) {
+                  const targetPosition = window.pageYOffset + headerRect.top - offset;
+                  window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                  });
+                }
+              }
+            }, 100);
           };
 
           categoryContainer.appendChild(seeMoreItem);
@@ -1641,11 +1718,38 @@ window.scrollToProgressBar = function(callback, delay = 300) {
         grid.appendChild(categoryContainer);
       });
 
-      // Sur mobile, forcer l'expansion de tous les services après le rendu
+      // Sur mobile, ne pas forcer l'expansion automatique pour préserver l'UX naturelle
+      // Commenté pour éviter les conflits avec le comportement naturel des dropdowns
+      // if (window.innerWidth <= 768) {
+      //   setTimeout(() => {
+      //     expandAllServicesOnMobile();
+      //   }, 100);
+      // }
+
+      // Gestionnaire de redimensionnement désactivé pour préserver l'UX naturelle
+      // window.addEventListener('resize', () => {
+      //   if (window.innerWidth <= 768) {
+      //     setTimeout(() => {
+      //       resetServiceContainersPositioning();
+      //     }, 100);
+      //   }
+      // });
+    }
+
+    // Fonction pour réinitialiser le positionnement des conteneurs de services sur mobile
+    function resetServiceContainersPositioning() {
       if (window.innerWidth <= 768) {
-        setTimeout(() => {
-          expandAllServicesOnMobile();
-        }, 100);
+        const containers = document.querySelectorAll('.category-services-container, .category-header-planity, .service-item-planity');
+        containers.forEach(container => {
+          container.style.position = 'static';
+          container.style.transform = 'none';
+          container.style.top = 'auto';
+          container.style.bottom = 'auto';
+          container.style.left = 'auto';
+          container.style.right = 'auto';
+          container.style.zIndex = 'auto';
+        });
+        console.log('📱 Positionnement des conteneurs de services réinitialisé');
       }
     }
 
@@ -1657,8 +1761,12 @@ window.scrollToProgressBar = function(callback, delay = 300) {
           button.click(); // Simuler un clic pour afficher tous les services
         }
       });
+
+      // Réinitialiser le positionnement de tous les conteneurs de services
+      resetServiceContainersPositioning();
+
       console.log('📱 Tous les services ont été étendus sur mobile');
-      
+
       // Ajouter un gestionnaire d'événements pour le clic sur les en-têtes d'accordéon
       setTimeout(() => {
         const accordionHeaders = document.querySelectorAll('.accordion-header');
@@ -1677,14 +1785,15 @@ window.scrollToProgressBar = function(callback, delay = 300) {
                   rect.right <= (window.innerWidth || document.documentElement.clientWidth)
                 );
                 
-                if (!isInViewport) {
-                  // Si l'élément n'est pas entièrement visible, faire défiler doucement
-                  accordionItem.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'center',
-                    inline: 'nearest'
-                  });
-                }
+                // Désactivé pour préserver le comportement naturel du dropdown
+                // if (!isInViewport) {
+                //   // Si l'élément n'est pas entièrement visible, faire défiler doucement
+                //   accordionItem.scrollIntoView({
+                //     behavior: 'smooth',
+                //     block: 'center',
+                //     inline: 'nearest'
+                //   });
+                // }
               }
             }, 50); // Délai pour laisser l'animation se terminer
           });
@@ -1745,10 +1854,8 @@ window.scrollToProgressBar = function(callback, delay = 300) {
         bookingState.selectedService = srv;
         console.log("Service sélectionné:", srv);
 
-        // Utiliser la fonction utilitaire pour le scroll automatique
-        window.scrollToProgressBar(() => {
-          goToStep(2);
-        });
+        // Pas de scroll automatique pour préserver l'UX naturelle des dropdowns
+        goToStep(2);
       };
 
       serviceItem.onclick = selectService;
