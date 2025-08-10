@@ -1638,6 +1638,27 @@ body {
     align-items: stretch !important;
     justify-content: flex-start !important;
   }
+
+  /* Amélioration de l'affichage des services sur mobile */
+  #booking-step-content {
+    padding: 0 0.5rem !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+  }
+
+  .services-list-planity {
+    display: block !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .category-services-container {
+    width: 100% !important;
+    margin-bottom: 1rem !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+  }
   #employees-grid {
     display: grid !important;
     grid-template-columns: 1fr !important;
@@ -1846,7 +1867,39 @@ body {
     max-width: 100vw !important;
     min-width: 0 !important;
     margin: 0 !important;
-    padding: 0 0.2rem !important;
+    padding: 0 0.5rem !important;
+  }
+
+  /* Optimisation spécifique pour les services sur mobile */
+  .services {
+    padding: 0 0.5rem !important;
+  }
+
+  .services h2 {
+    text-align: center !important;
+    margin-bottom: 1rem !important;
+    padding: 0 1rem !important;
+  }
+
+  .services-list-planity {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .category-header-planity {
+    margin-left: -0.5rem !important;
+    margin-right: -0.5rem !important;
+    border-radius: 0 !important;
+  }
+
+  .category-services-container {
+    margin-left: -0.5rem !important;
+    margin-right: -0.5rem !important;
+    border-radius: 0 !important;
+    border-left: none !important;
+    border-right: none !important;
   }
   .categories h2,
   .services h2,
@@ -3267,18 +3320,68 @@ body,
   .service-item-planity {
     flex-direction: column;
     align-items: flex-start;
-    gap: 1rem;
-    padding: 1rem;
+    gap: 0.8rem;
+    padding: 1rem 1rem;
+    min-height: auto;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  .service-info-planity {
+    width: 100%;
+    gap: 0.4rem;
+  }
+
+  .service-name-planity {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.3rem;
+  }
+
+  .service-description-planity {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    margin-bottom: 0.3rem;
+  }
+
+  .service-price-planity {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1f2937;
   }
 
   .service-meta-planity {
     width: 100%;
     justify-content: space-between;
+    align-items: center;
     margin-right: 0;
+    gap: 1rem;
+  }
+
+  .service-duration-planity {
+    font-size: 0.85rem;
+    color: #6b7280;
+    font-weight: 500;
+    min-width: auto;
+    text-align: left;
   }
 
   .service-choose-btn {
     min-width: 100px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    background: #1f2937;
+    color: white;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .service-choose-btn:hover {
+    background: #374151;
+    transform: translateY(-1px);
   }
 
   /* Responsive pour "Voir plus" */
@@ -3304,25 +3407,92 @@ body,
     display: none; /* Masquer la sidebar sur mobile */
   }
 
+  /* Optimisation des services sur mobile */
+  .services-list-planity {
+    margin: 0;
+    padding: 0;
+  }
+
+  .category-header-planity {
+    padding: 0.8rem 1rem;
+    margin-top: 1rem;
+  }
+
+  .category-header-planity:first-child {
+    margin-top: 0;
+  }
+
+  .category-services-container {
+    margin-bottom: 1rem;
+  }
+
   .service-item-planity {
-    padding: 0.8rem;
+    padding: 1rem;
     min-height: auto;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .service-info-planity {
+    width: 100%;
+    gap: 0.3rem;
   }
 
   .service-name-planity {
-    font-size: 0.9rem;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.2rem;
   }
 
-  .service-description-planity,
-  .service-price-planity,
+  .service-description-planity {
+    font-size: 0.85rem;
+    line-height: 1.4;
+    color: #6b7280;
+    margin-bottom: 0.3rem;
+  }
+
+  .service-price-planity {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1f2937;
+  }
+
+  .service-meta-planity {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 0;
+    gap: 1rem;
+  }
+
   .service-duration-planity {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
+    color: #6b7280;
+    font-weight: 500;
+    min-width: auto;
+    text-align: left;
   }
 
   .service-choose-btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.8rem;
-    min-width: 80px;
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+    min-width: 100px;
+    border-radius: 6px;
+    background: #1f2937;
+    color: white;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .service-choose-btn:hover,
+  .service-choose-btn:active {
+    background: #374151;
+    transform: translateY(-1px);
   }
 
   .grid.services-compact {
@@ -3347,6 +3517,118 @@ body,
 
   .card.service-compact p {
     font-size: 0.7rem;
+  }
+
+  /* Amélioration de l'espacement et de la lisibilité sur mobile */
+  .service-item-planity:hover {
+    background: #f9fafb !important;
+  }
+
+  .service-item-planity.selected {
+    background: #1f2937 !important;
+    color: #ffffff !important;
+  }
+
+  .service-item-planity.selected .service-name-planity,
+  .service-item-planity.selected .service-description-planity,
+  .service-item-planity.selected .service-price-planity,
+  .service-item-planity.selected .service-duration-planity {
+    color: #ffffff !important;
+  }
+
+  .service-item-planity.selected .service-choose-btn {
+    background: #ffffff !important;
+    color: #1f2937 !important;
+  }
+
+  /* Amélioration de l'accessibilité tactile */
+  .service-choose-btn {
+    min-height: 44px !important;
+    touch-action: manipulation !important;
+  }
+
+  .service-choose-btn:active {
+    transform: scale(0.98) !important;
+  }
+
+  /* Espacement entre les services */
+  .service-item-planity + .service-item-planity {
+    border-top: 1px solid #e5e7eb;
+  }
+
+  /* Amélioration de l'affichage global sur mobile */
+  .planity-booking-section {
+    padding: 0 0.5rem 1rem 0.5rem !important;
+  }
+
+  .planity-booking-title {
+    font-size: 1.2rem !important;
+    text-align: center !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .planity-booking-subtitle {
+    font-size: 0.85rem !important;
+    text-align: center !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Correction de l'affichage des conteneurs de services */
+  .category-services-container {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  /* Amélioration de la lisibilité des prix */
+  .service-price-planity {
+    background: #f8f9fa !important;
+    padding: 0.2rem 0.5rem !important;
+    border-radius: 4px !important;
+    display: inline-block !important;
+  }
+
+  .service-item-planity.selected .service-price-planity {
+    background: rgba(255, 255, 255, 0.2) !important;
+  }
+}
+
+/* Styles pour très petits écrans (smartphones en portrait) */
+@media (max-width: 480px) {
+  .service-item-planity {
+    padding: 0.8rem !important;
+    gap: 0.6rem !important;
+  }
+
+  .service-name-planity {
+    font-size: 0.95rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .service-description-planity {
+    font-size: 0.8rem !important;
+    line-height: 1.3 !important;
+  }
+
+  .service-price-planity {
+    font-size: 0.85rem !important;
+    padding: 0.15rem 0.4rem !important;
+  }
+
+  .service-duration-planity {
+    font-size: 0.8rem !important;
+  }
+
+  .service-choose-btn {
+    padding: 0.5rem 1rem !important;
+    font-size: 0.85rem !important;
+    min-width: 90px !important;
+  }
+
+  .category-header-planity {
+    padding: 0.6rem 0.8rem !important;
+  }
+
+  .category-header-planity h3 {
+    font-size: 0.85rem !important;
   }
 
   .ib-modal {

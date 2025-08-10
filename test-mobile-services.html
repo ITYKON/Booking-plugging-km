@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Mobile Services</title>
+    <link rel="stylesheet" href="assets/css/booking-form.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+        }
+        .test-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .test-title {
+            text-align: center;
+            color: #1f2937;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="test-title">Test Affichage Mobile Services</h1>
+        
+        <div class="services-list-planity">
+            <!-- Catégorie Soins visage -->
+            <div class="category-header-planity">
+                <h3>Soins visage</h3>
+            </div>
+            <div class="category-services-container">
+                <div class="service-item-planity">
+                    <div class="service-info-planity">
+                        <h3 class="service-name-planity">BRUSHING L'ORÉAL</h3>
+                        <p class="service-description-planity">Brushing professionnel avec produits L'Oréal</p>
+                        <p class="service-price-planity">1 800 DA</p>
+                    </div>
+                    <div class="service-meta-planity">
+                        <span class="service-duration-planity">40min</span>
+                        <button class="service-choose-btn" type="button">Choisir</button>
+                    </div>
+                </div>
+                
+                <div class="service-item-planity">
+                    <div class="service-info-planity">
+                        <h3 class="service-name-planity">COUPE</h3>
+                        <p class="service-description-planity">Coupe de cheveux moderne</p>
+                        <p class="service-price-planity">1 000 DA</p>
+                    </div>
+                    <div class="service-meta-planity">
+                        <span class="service-duration-planity">10min</span>
+                        <button class="service-choose-btn" type="button">Choisir</button>
+                    </div>
+                </div>
+                
+                <div class="service-item-planity">
+                    <div class="service-info-planity">
+                        <h3 class="service-name-planity">COLORATION RACINE L'ORÉAL</h3>
+                        <p class="service-description-planity">Coloration des racines avec produits L'Oréal</p>
+                        <p class="service-price-planity">4 850 DA</p>
+                    </div>
+                    <div class="service-meta-planity">
+                        <span class="service-duration-planity">1h20min</span>
+                        <button class="service-choose-btn" type="button">Choisir</button>
+                    </div>
+                </div>
+                
+                <div class="service-item-planity">
+                    <div class="service-info-planity">
+                        <h3 class="service-name-planity">COLORATION L'ORÉAL</h3>
+                        <p class="service-description-planity">Coloration complète avec produits L'Oréal</p>
+                        <p class="service-price-planity">à partir de 7 500 DA</p>
+                    </div>
+                    <div class="service-meta-planity">
+                        <span class="service-duration-planity">2h</span>
+                        <button class="service-choose-btn" type="button">Choisir</button>
+                    </div>
+                </div>
+                
+                <div class="service-item-planity">
+                    <div class="service-info-planity">
+                        <h3 class="service-name-planity">COLORATION RACINE POLYCOS</h3>
+                        <p class="service-description-planity">Coloration des racines avec produits Polycos</p>
+                        <p class="service-price-planity">2 950 DA</p>
+                    </div>
+                    <div class="service-meta-planity">
+                        <span class="service-duration-planity">1h</span>
+                        <button class="service-choose-btn" type="button">Choisir</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Catégorie Soins lissants -->
+            <div class="category-header-planity">
+                <h3>Soins lissants</h3>
+            </div>
+            <div class="category-services-container">
+                <div class="service-item-planity">
+                    <div class="service-info-planity">
+                        <h3 class="service-name-planity">LISSAGE BRÉSILIEN</h3>
+                        <p class="service-description-planity">Lissage brésilien longue durée</p>
+                        <p class="service-price-planity">8 500 DA</p>
+                    </div>
+                    <div class="service-meta-planity">
+                        <span class="service-duration-planity">3h</span>
+                        <button class="service-choose-btn" type="button">Choisir</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simulation de sélection de service
+        document.querySelectorAll('.service-choose-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Retirer la sélection précédente
+                document.querySelectorAll('.service-item-planity').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                
+                // Ajouter la sélection au service cliqué
+                this.closest('.service-item-planity').classList.add('selected');
+                
+                // Feedback visuel
+                this.textContent = 'Sélectionné';
+                setTimeout(() => {
+                    this.textContent = 'Choisir';
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>
