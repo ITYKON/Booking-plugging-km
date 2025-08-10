@@ -1296,6 +1296,17 @@ window.scrollToProgressBar = function(callback, delay = 300) {
           enhanceMobileNavigation();
         }, 200);
       }
+
+      // Écouter les changements de taille d'écran pour réajuster l'affichage des services
+      let resizeTimeout;
+      window.addEventListener('resize', function() {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {
+          if (bookingState.step === 1) {
+            renderServicesGrid(); // Re-render les services avec la nouvelle logique mobile/desktop
+          }
+        }, 250);
+      });
     });
 
     function renderSidebar() {
@@ -1368,6 +1379,7 @@ window.scrollToProgressBar = function(callback, delay = 300) {
       });
 
       // Créer l'accordéon pour mobile
+      console.log('📱 Création de l\'accordéon mobile...');
       const accordionContainer = document.createElement("div");
       accordionContainer.className = "category-accordion-mobile";
 
@@ -1377,6 +1389,7 @@ window.scrollToProgressBar = function(callback, delay = 300) {
       accordionContainer.appendChild(accordionTitle);
 
       // Grouper les services par catégorie pour l'accordéon
+      console.log(`📱 Total services disponibles: ${bookingState.services.length}`);
       const servicesByCategory = {};
       bookingState.services.forEach((service) => {
         const category = service.category_name || "Autres";
@@ -1389,6 +1402,7 @@ window.scrollToProgressBar = function(callback, delay = 300) {
       // Créer un accordéon pour chaque catégorie
       Object.keys(servicesByCategory).forEach((categoryName) => {
         const categoryServices = servicesByCategory[categoryName];
+        console.log(`📱 Accordéon - Catégorie: ${categoryName}, Services: ${categoryServices.length}`);
 
         const accordionItem = document.createElement("div");
         accordionItem.className = "accordion-item";
@@ -1547,9 +1561,13 @@ window.scrollToProgressBar = function(callback, delay = 300) {
       // Afficher chaque catégorie avec ses services
       Object.keys(servicesByCategory).forEach((categoryName) => {
         const services = servicesByCategory[categoryName];
-        const maxServicesShown = 5; // Limite d'affichage par catégorie
+        // Augmenter la limite sur mobile ou afficher tous les services
+        const isMobile = window.innerWidth <= 768;
+        const maxServicesShown = isMobile ? services.length : 5; // Afficher tous les services sur mobile
         const servicesToShow = services.slice(0, maxServicesShown);
         const remainingServices = services.length - maxServicesShown;
+
+        console.log(`📱 Mobile: ${isMobile}, Catégorie: ${categoryName}, Services total: ${services.length}, Affichés: ${servicesToShow.length}, Restants: ${remainingServices}`);
 
         // Créer l'en-tête de catégorie
         const categoryHeader = document.createElement("div");
@@ -1568,8 +1586,8 @@ window.scrollToProgressBar = function(callback, delay = 300) {
           categoryContainer.appendChild(serviceItem);
         });
 
-        // Ajouter le lien "Voir plus" si nécessaire
-        if (remainingServices > 0) {
+        // Ajouter le lien "Voir plus" si nécessaire (seulement sur desktop)
+        if (remainingServices > 0 && !isMobile) {
           const seeMoreItem = document.createElement("div");
           seeMoreItem.className = "see-more-services-planity";
           seeMoreItem.innerHTML = `
@@ -1622,6 +1640,24 @@ window.scrollToProgressBar = function(callback, delay = 300) {
 
         grid.appendChild(categoryContainer);
       });
+
+      // Sur mobile, forcer l'expansion de tous les services après le rendu
+      if (window.innerWidth <= 768) {
+        setTimeout(() => {
+          expandAllServicesOnMobile();
+        }, 100);
+      }
+    }
+
+    // Fonction pour forcer l'affichage de tous les services sur mobile
+    function expandAllServicesOnMobile() {
+      const seeMoreButtons = document.querySelectorAll('.see-more-services-planity');
+      seeMoreButtons.forEach(button => {
+        if (button.style.display !== 'none') {
+          button.click(); // Simuler un clic pour afficher tous les services
+        }
+      });
+      console.log('📱 Tous les services ont été étendus sur mobile');
     }
 
     function createServiceItem(srv) {

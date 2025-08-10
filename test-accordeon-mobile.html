@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Accordéon Mobile</title>
+    <link rel="stylesheet" href="assets/css/booking-form.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fa;
+        }
+        .test-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .test-title {
+            text-align: center;
+            color: #1f2937;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        .debug-info {
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #374151;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1 class="test-title">Test Accordéon Mobile</h1>
+        
+        <div class="debug-info">
+            <strong>Largeur écran:</strong> <span id="screen-width"></span>px<br>
+            <strong>Mobile détecté:</strong> <span id="is-mobile"></span><br>
+            <strong>Accordéon visible:</strong> <span id="accordion-visible"></span>
+        </div>
+        
+        <!-- Simulation de la structure du booking -->
+        <div class="booking-main-content">
+            <div class="categories">
+                <h2 class="category-title-planity">Catégorie</h2>
+                <div class="booking-categories" id="category-buttons">
+                    <!-- Boutons desktop (cachés sur mobile) -->
+                    <div class="category-buttons-desktop">
+                        <button class="booking-category-btn active">Tous</button>
+                        <button class="booking-category-btn">Soins visage</button>
+                        <button class="booking-category-btn">Coiffure</button>
+                    </div>
+                    
+                    <!-- Accordéon mobile -->
+                    <div class="category-accordion-mobile">
+                        <h3 class="category-accordion-title">Choix de la prestation</h3>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span class="accordion-category-name">Soins visage</span>
+                                <span class="accordion-arrow">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="accordion-service-item">
+                                    <div class="service-content">
+                                        <div class="service-main-info">
+                                            <h5 class="service-name">BRUSHING L'ORÉAL</h5>
+                                            <p class="service-price">1 800 DA</p>
+                                        </div>
+                                        <div class="service-meta">
+                                            <span class="service-duration">40min</span>
+                                            <button class="service-choose-btn">Choisir</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="accordion-service-item">
+                                    <div class="service-content">
+                                        <div class="service-main-info">
+                                            <h5 class="service-name">COUPE</h5>
+                                            <p class="service-price">1 000 DA</p>
+                                        </div>
+                                        <div class="service-meta">
+                                            <span class="service-duration">10min</span>
+                                            <button class="service-choose-btn">Choisir</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="accordion-service-item">
+                                    <div class="service-content">
+                                        <div class="service-main-info">
+                                            <h5 class="service-name">COLORATION RACINE L'ORÉAL</h5>
+                                            <p class="service-price">4 850 DA</p>
+                                        </div>
+                                        <div class="service-meta">
+                                            <span class="service-duration">1h20min</span>
+                                            <button class="service-choose-btn">Choisir</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="accordion-service-item">
+                                    <div class="service-content">
+                                        <div class="service-main-info">
+                                            <h5 class="service-name">COLORATION L'ORÉAL</h5>
+                                            <p class="service-price">à partir de 7 500 DA</p>
+                                        </div>
+                                        <div class="service-meta">
+                                            <span class="service-duration">2h</span>
+                                            <button class="service-choose-btn">Choisir</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="accordion-service-item">
+                                    <div class="service-content">
+                                        <div class="service-main-info">
+                                            <h5 class="service-name">COLORATION RACINE POLYCOS</h5>
+                                            <p class="service-price">2 950 DA</p>
+                                        </div>
+                                        <div class="service-meta">
+                                            <span class="service-duration">1h</span>
+                                            <button class="service-choose-btn">Choisir</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span class="accordion-category-name">Soins lissants</span>
+                                <span class="accordion-arrow">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="accordion-service-item">
+                                    <div class="service-content">
+                                        <div class="service-main-info">
+                                            <h5 class="service-name">LISSAGE BRÉSILIEN</h5>
+                                            <p class="service-price">8 500 DA</p>
+                                        </div>
+                                        <div class="service-meta">
+                                            <span class="service-duration">3h</span>
+                                            <button class="service-choose-btn">Choisir</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="accordion-item">
+                            <div class="accordion-header">
+                                <span class="accordion-category-name">Onglerie</span>
+                                <span class="accordion-arrow">▼</span>
+                            </div>
+                            <div class="accordion-content">
+                                <div class="accordion-service-item">
+                                    <div class="service-content">
+                                        <div class="service-main-info">
+                                            <h5 class="service-name">MANUCURE CLASSIQUE</h5>
+                                            <p class="service-price">1 500 DA</p>
+                                        </div>
+                                        <div class="service-meta">
+                                            <span class="service-duration">45min</span>
+                                            <button class="service-choose-btn">Choisir</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="accordion-service-item">
+                                    <div class="service-content">
+                                        <div class="service-main-info">
+                                            <h5 class="service-name">POSE VERNIS GEL</h5>
+                                            <p class="service-price">2 000 DA</p>
+                                        </div>
+                                        <div class="service-meta">
+                                            <span class="service-duration">1h</span>
+                                            <button class="service-choose-btn">Choisir</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mise à jour des informations de debug
+        function updateDebugInfo() {
+            const width = window.innerWidth;
+            const isMobile = width <= 768;
+            const accordion = document.querySelector('.category-accordion-mobile');
+            const accordionVisible = accordion ? window.getComputedStyle(accordion).display !== 'none' : false;
+            
+            document.getElementById('screen-width').textContent = width;
+            document.getElementById('is-mobile').textContent = isMobile ? 'Oui' : 'Non';
+            document.getElementById('accordion-visible').textContent = accordionVisible ? 'Oui' : 'Non';
+        }
+        
+        // Gestion de l'accordéon
+        document.querySelectorAll('.accordion-header').forEach(header => {
+            header.addEventListener('click', function() {
+                const item = this.parentElement;
+                const isOpen = item.classList.contains('open');
+                
+                // Fermer tous les autres accordéons
+                document.querySelectorAll('.accordion-item').forEach(otherItem => {
+                    otherItem.classList.remove('open');
+                    otherItem.querySelector('.accordion-arrow').textContent = '▼';
+                });
+                
+                // Ouvrir/fermer l'accordéon cliqué
+                if (!isOpen) {
+                    item.classList.add('open');
+                    this.querySelector('.accordion-arrow').textContent = '▲';
+                }
+            });
+        });
+        
+        // Gestion des boutons "Choisir"
+        document.querySelectorAll('.service-choose-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Retirer la sélection précédente
+                document.querySelectorAll('.accordion-service-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                
+                // Ajouter la sélection au service cliqué
+                this.closest('.accordion-service-item').classList.add('selected');
+                
+                // Feedback visuel
+                this.textContent = 'Sélectionné';
+                setTimeout(() => {
+                    this.textContent = 'Choisir';
+                }, 1000);
+            });
+        });
+        
+        // Initialisation et écoute du redimensionnement
+        updateDebugInfo();
+        window.addEventListener('resize', updateDebugInfo);
+    </script>
+</body>
+</html>
