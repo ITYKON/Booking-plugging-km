@@ -3987,6 +3987,15 @@ body,
   white-space: nowrap;
   text-align: center;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  /* S'assurer que les boutons ne sont pas visibles sur mobile */
+  display: none;
+}
+
+/* S'assurer que les boutons de catégorie sont bien masqués sur mobile */
+@media (min-width: 769px) {
+  .booking-category-btn {
+    display: inline-block;
+  }
 }
 
 .booking-category-btn:hover {
@@ -4070,10 +4079,18 @@ body,
   overflow: hidden;
   transition: max-height 0.3s ease;
   background: white;
+  /* Permettre le défilement si nécessaire */
+  overflow-y: auto;
+  /* Ajouter un peu d'espace en bas pour éviter que le contenu ne soit coupé */
+  padding-bottom: 0.5rem;
 }
 
 .accordion-item.open .accordion-content {
-  max-height: 1000px;
+  /* Remplacer la hauteur fixe par 'none' pour s'adapter au contenu */
+  max-height: none;
+  /* Ajouter une hauteur maximale raisonnable avec défilement si nécessaire */
+  max-height: 80vh;
+  overflow-y: auto;
 }
 
 .accordion-item.open .accordion-arrow {
@@ -4083,10 +4100,14 @@ body,
 .accordion-service-item {
   padding: 1rem 1rem;
   border-bottom: 1px solid #f3f4f6;
+  /* S'assurer que le contenu a suffisamment d'espace */
+  margin-bottom: 0.5rem;
 }
 
 .accordion-service-item:last-child {
   border-bottom: none;
+  /* Ajouter un peu plus d'espace en bas pour le dernier élément */
+  margin-bottom: 1rem;
 }
 
 .service-content {
@@ -4144,15 +4165,71 @@ body,
 /* Responsive pour le titre et les boutons de catégorie Planity */
 @media (max-width: 768px) {
   .category-title-planity {
-    display: none;
+    display: none !important;
   }
 
+  /* Style pour masquer les boutons de catégorie sur mobile */
   .category-buttons-desktop {
+    display: none !important;
+  }
+  
+  /* Afficher l'accordéon mobile */
+  .category-accordion-mobile {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+  }
+  
+  /* Style du titre de l'accordéon */
+  .category-accordion-title {
+    font-size: 1.2em;
+    margin-bottom: 15px;
+    color: #333;
+  }
+  
+  /* Style des éléments de l'accordéon */
+  .accordion-item {
+    border: 1px solid #e5e7eb;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .accordion-header {
+    background: #f9fafb;
+    padding: 15px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .accordion-content {
     display: none;
+    padding: 15px 20px;
+    background: white;
+  }
+  
+  .accordion-item.open .accordion-content {
+    display: block;
+  }
+  
+  .accordion-arrow {
+    font-size: 12px;
   }
 
   .category-accordion-mobile {
-    display: block;
+    display: block !important;
+    position: relative;
+    z-index: 10;
+    background: white;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0 0 20px 0;
+    padding: 0;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    overflow: hidden;
   }
 
   /* Masquer la grille de services sur mobile car elle est dans l'accordéon */

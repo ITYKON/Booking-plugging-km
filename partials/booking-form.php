@@ -42,6 +42,7 @@ window.ib_nonce = "<?php echo wp_create_nonce('ib_nonce'); ?>";
 <!-- intl-tel-input JS -->
 <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@18.1.1/build/js/intlTelInput.min.js"></script>
 <link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__); ?>../assets/css/booking-form.css">
+<link rel="stylesheet" href="<?php echo plugin_dir_url(__FILE__); ?>../assets/css/mobile-accordion.css">
 <?php
 // S'assurer que jQuery est chargé
 wp_enqueue_script('jquery');
