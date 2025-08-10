@@ -1658,6 +1658,38 @@ window.scrollToProgressBar = function(callback, delay = 300) {
         }
       });
       console.log('📱 Tous les services ont été étendus sur mobile');
+      
+      // Ajouter un gestionnaire d'événements pour le clic sur les en-têtes d'accordéon
+      setTimeout(() => {
+        const accordionHeaders = document.querySelectorAll('.accordion-header');
+        accordionHeaders.forEach(header => {
+          header.addEventListener('click', function() {
+            // Attendre que l'animation d'ouverture soit terminée
+            setTimeout(() => {
+              const accordionItem = this.closest('.accordion-item');
+              if (accordionItem.classList.contains('open')) {
+                // Faire défiler jusqu'à l'élément ouvert
+                const rect = accordionItem.getBoundingClientRect();
+                const isInViewport = (
+                  rect.top >= 0 &&
+                  rect.left >= 0 &&
+                  rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                  rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+                
+                if (!isInViewport) {
+                  // Si l'élément n'est pas entièrement visible, faire défiler doucement
+                  accordionItem.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'center',
+                    inline: 'nearest'
+                  });
+                }
+              }
+            }, 50); // Délai pour laisser l'animation se terminer
+          });
+        });
+      }, 100);
     }
 
     function createServiceItem(srv) {

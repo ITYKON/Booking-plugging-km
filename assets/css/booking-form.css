@@ -1622,6 +1622,84 @@ body {
   opacity: 0.7;
   transform: scale(1.01);
 }
+/* Styles pour les créneaux horaires sur mobile */
+@media (max-width: 768px) {
+  .slot-btn-planity {
+    padding: 18px 12px !important;
+    min-height: 80px !important;
+    margin-bottom: 12px !important;
+    border-radius: 12px !important;
+    font-size: 18px !important;
+    line-height: 1.4 !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05) !important;
+  }
+  
+  .slot-time-main {
+    font-size: 18px !important;
+    font-weight: 600 !important;
+    margin-bottom: 2px !important;
+  }
+  
+  .slot-time-end {
+    font-size: 14px !important;
+    margin-top: 4px !important;
+    opacity: 0.9 !important;
+  }
+  
+  .slots-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+    padding: 8px !important;
+  }
+  
+  .slots-container {
+    padding: 0 8px 20px 8px !important;
+  }
+  
+  /* Styles pour les écrans très petits */
+  @media (max-width: 400px) {
+    .slot-btn-planity {
+      min-height: 70px !important;
+      padding: 14px 10px !important;
+      font-size: 16px !important;
+    }
+    
+    .slot-time-main {
+      font-size: 16px !important;
+    }
+    
+    .slot-time-end {
+      font-size: 13px !important;
+    }
+    
+    .slots-grid {
+      grid-template-columns: 1fr !important;
+      gap: 10px !important;
+    }
+  }
+  
+  /* Amélioration du contraste et de la lisibilité */
+  .slot-btn-planity:not([disabled]) {
+    background: #ffffff !important;
+    border: 1px solid #e5e7eb !important;
+  }
+  
+  .slot-btn-planity:not([disabled]):hover {
+    background: #f8f9fa !important;
+    border-color: #d1d5db !important;
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08) !important;
+  }
+  
+  .slot-btn-planity[disabled] {
+    background: #f3f4f6 !important;
+    color: #9ca3af !important;
+    border: 1px solid #e5e7eb !important;
+    cursor: not-allowed !important;
+  }
+}
+
 @media (max-width: 600px) {
   .container,
   .content,
