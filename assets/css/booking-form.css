@@ -2063,8 +2063,8 @@ body {
 :hover:not(.selected):not(.active):not(.planity-cover):not(
     .planity-cover-image
   ) {
-  background: #f8fafc !important;
-  color: #1f2937 !important;
+  /* background: #f8fafc !important; */
+  /* color: #1f2937 !important; */
   border-color: #e5e7eb !important;
 }
 
