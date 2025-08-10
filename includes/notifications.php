@@ -632,13 +632,27 @@ class IB_Notifications {
         }
         
         $sql .= " ORDER BY created_at DESC LIMIT %d";
-        $params[] = $limit;
+        
+        // Préparer les paramètres pour wpdb::prepare
+        $prepared_params = [];
+        foreach ($params as $param) {
+            if (is_array($param)) {
+                // Si c'est un tableau, on le convertit en chaîne
+                $prepared_params[] = maybe_serialize($param);
+            } else {
+                $prepared_params[] = $param;
+            }
+        }
+        $prepared_params[] = $limit;
         
         // Log de la requête SQL et des paramètres
         error_log('[IB Booking] get_recent - Préparation de la requête : ' . $sql);
-        error_log('[IB Booking] get_recent - Paramètres : ' . print_r($params, true));
+        error_log('[IB Booking] get_recent - Paramètres : ' . print_r($prepared_params, true));
         
-        $results = $wpdb->get_results($wpdb->prepare($sql, ...$params));
+        // Utiliser call_user_func_array pour passer les paramètres de manière sécurisée
+        $results = $wpdb->get_results(
+            $wpdb->prepare($sql, $prepared_params)
+        );
         
         // Log pour le débogage
         error_log('[IB Booking] get_recent - Requête exécutée : ' . $wpdb->last_query);
