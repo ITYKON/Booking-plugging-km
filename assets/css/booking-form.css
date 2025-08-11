@@ -142,6 +142,11 @@
     -ms-user-select: none !important;
     user-select: none !important;
     pointer-events: none !important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-user-modify: read-only !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-drag: none !important;
   }
 
   /* Réactive les événements de clic uniquement sur les liens et boutons */
