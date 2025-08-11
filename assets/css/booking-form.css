@@ -1,3 +1,105 @@
+/* ===== MOBILE HOVER FIXES ===== */
+@media (max-width: 768px) {
+  /* Désactive les effets hover sur mobile */
+  *:hover,
+  *:focus,
+  *:active {
+    background: inherit !important;
+    color: inherit !important;
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    text-decoration: none !important;
+  }
+
+  /* Barre de progression */
+  .planity-progress-bar .ib-step .ib-step-circle:hover,
+  .planity-progress-bar .ib-step:hover .ib-step-circle {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Cartes de service */
+  .service-item-planity:hover,
+  .card.service-compact:hover {
+    transform: none !important;
+    box-shadow: none !important;
+  }
+
+  /* Boutons */
+  .btn:hover,
+  button:hover,
+  .ib-btn:hover,
+  .slot-btn:hover,
+  .slot-btn-planity:hover {
+    background: var(--ib-primary, #1f2937) !important;
+    color: white !important;
+    transform: none !important;
+  }
+
+  /* Boutons de navigation */
+  .prev-step:hover,
+  .next-step:hover,
+  .prev-btn:hover,
+  .next-btn:hover {
+    background: #f3f4f6 !important;
+    color: #1f2937 !important;
+  }
+
+  /* Éléments de formulaire */
+  input:hover,
+  select:hover,
+  textarea:hover {
+    border-color: #d1d5db !important;
+    background: #fff !important;
+  }
+
+  /* Calendrier et créneaux */
+  .day:hover,
+  .slot:hover,
+  .slot-btn:hover,
+  .slot-btn-planity:hover {
+    background: #f3f4f6 !important;
+    color: #1f2937 !important;
+  }
+
+  /* Désactive le hover sur les états actifs/sélectionnés */
+  .day.selected:hover,
+  .slot.selected:hover,
+  .slot-btn.selected:hover,
+  .slot-btn-planity.selected:hover {
+    background: #1f2937 !important;
+    color: white !important;
+  }
+
+  /* Désactive le hover sur les éléments désactivés */
+  [disabled]:hover,
+  .disabled:hover,
+  .is-disabled:hover {
+    opacity: 0.6 !important;
+    cursor: not-allowed !important;
+  }
+
+  /* Ajuste la taille des éléments tactiles */
+  button,
+  .btn,
+  .ib-btn,
+  .slot-btn,
+  .slot-btn-planity,
+  .day,
+  .slot {
+    min-height: 44px !important;
+    min-width: 44px !important;
+    padding: 8px 16px !important;
+  }
+
+  /* Feedback tactile */
+  *:active {
+    opacity: 0.8 !important;
+    transition: opacity 0.1s ease !important;
+  }
+}
+
 /* ===== HEADER MOBILE STYLE INSTITUT BY KM ===== */
 .mobile-header-institut {
   display: none;
