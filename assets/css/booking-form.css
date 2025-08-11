@@ -1,9 +1,11 @@
 /* ===== MOBILE HOVER FIXES ===== */
 @media (max-width: 768px) {
-  /* Désactive les effets hover sur mobile */
+  /* Désactive complètement les effets hover sur mobile */
   *:hover,
   *:focus,
-  *:active {
+  *:active,
+  *:focus-visible,
+  *:focus-within {
     background: inherit !important;
     color: inherit !important;
     transform: none !important;
@@ -12,11 +14,43 @@
     text-decoration: none !important;
   }
 
-  /* Barre de progression */
-  .planity-progress-bar .ib-step .ib-step-circle:hover,
-  .planity-progress-bar .ib-step:hover .ib-step-circle {
+  /* Barre de progression - Désactive tous les effets hover */
+  .planity-progress-bar *:hover,
+  .planity-progress-bar *:active,
+  .planity-progress-bar *:focus,
+  .ib-step:hover,
+  .ib-step:active,
+  .ib-step:focus,
+  .ib-step-circle:hover,
+  .ib-step-circle:active,
+  .ib-step-circle:focus,
+  .ib-step-label:hover,
+  .ib-step-label:active,
+  .ib-step-label:focus {
+    background: inherit !important;
+    color: inherit !important;
     transform: none !important;
     box-shadow: none !important;
+    opacity: 1 !important;
+    cursor: default !important;
+  }
+
+  /* Style spécifique pour l'étape active */
+  .ib-step.active .ib-step-circle {
+    background: #1f2937 !important;
+    color: white !important;
+  }
+
+  /* Style spécifique pour les étapes complétées */
+  .ib-step.completed .ib-step-circle {
+    background: #1f2937 !important;
+    color: white !important;
+  }
+
+  /* Style pour les étapes inactives */
+  .ib-step:not(.active):not(.completed) .ib-step-circle {
+    background: #e5e7eb !important;
+    color: #9ca3af !important;
   }
 
   /* Cartes de service */
@@ -93,10 +127,76 @@
     padding: 8px 16px !important;
   }
 
-  /* Feedback tactile */
+  /* Footer - Désactive TOUS les effets visuels */
+  footer,
+  footer *,
+  .footer,
+  .footer *,
+  #footer,
+  #footer * {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    -khtml-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+    user-select: none !important;
+    pointer-events: none !important;
+  }
+
+  /* Réactive les événements de clic uniquement sur les liens et boutons */
+  footer a,
+  footer button,
+  .footer a,
+  .footer button,
+  #footer a,
+  #footer button {
+    pointer-events: auto !important;
+  }
+
+  /* Désactive tous les états visuels */
+  footer *:hover,
+  footer *:active,
+  footer *:focus,
+  footer *:focus-visible,
+  footer *:focus-within,
+  .footer *:hover,
+  .footer *:active,
+  .footer *:focus,
+  .footer *:focus-visible,
+  .footer *:focus-within,
+  #footer *:hover,
+  #footer *:active,
+  #footer *:focus,
+  #footer *:focus-visible,
+  #footer *:focus-within {
+    background: inherit !important;
+    color: inherit !important;
+    transform: none !important;
+    box-shadow: none !important;
+    opacity: 1 !important;
+    text-decoration: none !important;
+  }
+
+  /* Désactive les transitions et animations sur mobile */
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+
+  /* Feedback tactile plus subtil */
   *:active {
-    opacity: 0.8 !important;
-    transition: opacity 0.1s ease !important;
+    opacity: 0.9 !important;
+  }
+
+  /* Désactive le focus sur les éléments cliquables */
+  button:focus,
+  a:focus,
+  input:focus,
+  select:focus,
+  textarea:focus {
+    outline: none !important;
+    box-shadow: none !important;
   }
 }
 
