@@ -1,4 +1,54 @@
 /* ===== MOBILE HOVER FIXES ===== */
+@supports (-webkit-touch-callout: none) {
+  /* iOS specific styles */
+  footer,
+  footer *,
+  .footer,
+  .footer *,
+  #footer,
+  #footer * {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    -webkit-user-drag: none !important;
+    -webkit-transform: translateZ(0) !important;
+    transform: translateZ(0) !important;
+    -webkit-backface-visibility: hidden !important;
+    backface-visibility: hidden !important;
+    -webkit-overflow-scrolling: touch !important;
+    -webkit-text-size-adjust: 100% !important;
+    -webkit-font-smoothing: antialiased !important;
+    user-select: none !important;
+    -webkit-user-modify: read-only !important;
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+    tap-highlight-color: transparent !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  
+  /* More specific targeting for iOS tap highlight */
+  footer,
+  .footer,
+  #footer {
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+    -webkit-tap-highlight-color: transparent !important;
+  }
+  
+  /* Prevent text selection on tap-hold */
+  footer *:not(input):not(textarea),
+  .footer *:not(input):not(textarea),
+  #footer *:not(input):not(textarea) {
+    -webkit-user-select: none !important;
+    user-select: none !important;
+    -webkit-touch-callout: none !important;
+    -webkit-tap-highlight-color: transparent !important;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0) !important;
+    -webkit-user-modify: read-only !important;
+  }
+}
+
 @media (max-width: 768px) {
   /* Désactive complètement les effets hover sur mobile */
   *:hover,

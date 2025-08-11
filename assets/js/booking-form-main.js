@@ -198,6 +198,75 @@ window.setStep = function (step) {
   }
 };
 
+// Fonction pour désigner les effets de surbrillance iOS sur le footer
+function preventIOSTapHighlight() {
+  // Vérifier si c'est iOS
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || 
+               (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  
+  if (!isIOS) return;
+  
+  // Fonction pour appliquer les styles nécessaires
+  const applyIOSFix = (element) => {
+    if (!element) return;
+    
+    // Ajouter les styles nécessaires
+    element.style.webkitTapHighlightColor = 'transparent';
+    element.style.webkitTouchCallout = 'none';
+    element.style.webkitUserSelect = 'none';
+    element.style.userSelect = 'none';
+    
+    // Ajouter un gestionnaire d'événements pour prévenir le comportement par défaut
+    const preventDefault = (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      return false;
+    };
+    
+    // Ajouter les écouteurs d'événements
+    element.addEventListener('touchstart', preventDefault, { passive: false });
+    element.addEventListener('touchend', preventDefault, { passive: false });
+    element.addEventListener('touchmove', preventDefault, { passive: false });
+    
+    // Appliquer aux enfants
+    const children = element.querySelectorAll('*');
+    children.forEach(child => {
+      child.style.webkitTapHighlightColor = 'transparent';
+      child.style.webkitTouchCallout = 'none';
+      child.style.webkitUserSelect = 'none';
+      child.style.userSelect = 'none';
+    });
+  };
+  
+  // Appliquer aux éléments de footer
+  const footers = ['footer', '.footer', '#footer'];
+  footers.forEach(selector => {
+    const elements = document.querySelectorAll(selector);
+    elements.forEach(applyIOSFix);
+  });
+  
+  // Écouter les changements DOM pour les chargements dynamiques
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      mutation.addedNodes.forEach(node => {
+        if (node.nodeType === 1) { // Vérifier si c'est un élément
+          if (node.matches('footer, .footer, #footer')) {
+            applyIOSFix(node);
+          }
+          const footerChildren = node.querySelectorAll('footer, .footer, #footer');
+          footerChildren.forEach(applyIOSFix);
+        }
+      });
+    });
+  });
+  
+  // Commencer à observer le document avec la configuration
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true
+  });
+}
+
 // Initialisation immédiate
 try {
   const savedState = localStorage.getItem("bookingState");
@@ -251,6 +320,9 @@ window.adjustProgressBarPosition = function() {
 document.addEventListener("DOMContentLoaded", function () {
   window.updateProgressBar();
   window.adjustProgressBarPosition();
+  
+  // Prévenir la surbrillance iOS sur le footer
+  preventIOSTapHighlight();
 });
 
 setTimeout(() => {
