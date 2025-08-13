@@ -10,47 +10,50 @@
 .category-accordion-title {
   font-size: 18px;
   font-weight: 600;
-  color: #333;
+  color: #111827;
   margin-bottom: 15px;
   padding: 10px 0;
   border-bottom: 1px solid #eee;
+  text-align: left;
 }
 
 /* Style de chaque élément de l'accordéon */
 .accordion-item {
-  margin-bottom: 10px;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
+  margin-bottom: 12px;
+  border: none;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #ffffff;
 }
 
 /* Style de l'en-tête de l'accordéon */
 .accordion-header {
-  padding: 15px 20px;
-  background-color: #f9fafb;
+  padding: 16px 20px 16px 0;
+  background-color: transparent;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: background-color 0.2s ease;
+  border-radius: 12px;
 }
 
 .accordion-header:hover {
-  background-color: #f3f4f6;
+  background-color: #f9fafb;
 }
 
 .accordion-category-name {
   font-weight: 600;
-  color: #1f2937;
+  color: #111827;
   font-size: 16px;
 }
 
 .accordion-arrow {
   font-size: 12px;
   transition: transform 0.2s ease;
-  color: #6b7280;
+  color: #9ca3af;
 }
 
 /* Style du contenu de l'accordéon */
@@ -68,6 +71,7 @@
   /* Permettre le défilement naturel sur tous les navigateurs */
   scrollbar-width: auto;
   -ms-overflow-style: auto;
+  border-radius: 0 0 12px 12px;
 }
 
 /* Permettre le défilement naturel sur tous les navigateurs */
@@ -80,7 +84,7 @@
 .accordion-item.open .accordion-content {
   max-height: 500px; /* Hauteur fixe plus grande pour éviter le scroll forcé */
   /* Ajouter un peu d'espace en bas pour éviter que le contenu ne soit collé au bord */
-  padding-bottom: 10px;
+  padding-bottom: 16px;
 }
 
 /* Améliorer l'expérience tactile sur mobile */
@@ -132,9 +136,10 @@
 
 /* Style des éléments de service dans l'accordéon */
 .accordion-service-item {
-  padding: 15px 20px;
-  border-top: 1px solid #f3f4f6;
+  padding: 16px 20px 16px 0;
+  border-top: none;
   transition: background-color 0.2s ease;
+  margin: 0;
 }
 
 .accordion-service-item:last-child {
@@ -159,14 +164,14 @@
 
 .service-name {
   font-weight: 600;
-  color: #1f2937;
+  color: #111827;
   font-size: 15px;
   margin: 0;
 }
 
 .service-price {
   font-weight: 600;
-  color: #1f2937; /* Couleur de texte principale au lieu du vert */
+  color: #111827;
   font-size: 14px;
   margin: 0;
 }
@@ -183,8 +188,8 @@
 }
 
 .service-choose-btn {
-  background-color: #1f2937;
-  color: white;
+  background-color: #f3f4f6;
+  color: #111827;
   border: none;
   border-radius: 6px;
   padding: 6px 12px;
@@ -195,16 +200,18 @@
 }
 
 .service-choose-btn:hover {
-  background-color: #111827;
+  background-color: #e5e7eb;
 }
 
 /* Styles pour les écrans mobiles uniquement */
 @media (max-width: 768px) {
   .category-accordion-mobile {
     display: block; /* Forcer l'affichage sur mobile */
-    background-color: #ffffff;
-    border: 1px solid #e5e7eb;
-    border-radius: 8px;
+    background-color: transparent;
+    border: none;
+    border-radius: 0;
+    margin: 0;
+    padding: 0;
   }
   
   .category-buttons-desktop {
@@ -212,13 +219,31 @@
   }
   
   .categories {
-    padding: 0 10px;
+    padding: 0;
   }
   
   .category-title-planity {
     margin-bottom: 15px !important;
     font-size: 18px;
-    color: #1f2937;
+    color: #111827;
+    padding: 0;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .accordion-item {
+    margin: 0 0 8px 0;
+    border-radius: 12px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .accordion-header {
+    border-radius: 12px;
+  }
+  
+  .accordion-item.open .accordion-content {
+    border-radius: 0 0 12px 12px;
   }
 }
 
