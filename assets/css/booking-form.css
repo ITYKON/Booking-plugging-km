@@ -2207,6 +2207,127 @@ body {
   }
 }
 
+/* ===== ALIGNEMENT GLOBAL À GAUCHE ===== */
+.booking-main-content,
+.booking-step-infos-modern,
+.booking-step-date-modern,
+.booking-step-service,
+.booking-step-employee,
+.booking-step-confirm {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 15px;
+  box-sizing: border-box;
+}
+
+/* Alignement des titres */
+h1, h2, h3, h4, .section-title, .category-title, .service-title {
+  text-align: left !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Conteneur de catégories et services */
+.categories-container,
+.services-container,
+.employees-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Cartes de service */
+.service-card,
+.employee-card {
+  margin-left: 0;
+  margin-right: auto;
+  text-align: left;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Conteneur du nom et du prix sur une seule ligne */
+.service-card .service-header,
+.service-title-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+}
+
+/* Style du nom du service */
+.service-name {
+  flex: 1;
+  font-size: 0.95em;
+  line-height: 1.4;
+  word-wrap: break-word;
+  white-space: normal;
+  padding-right: 8px;
+}
+
+/* Style du prix */
+.service-price {
+  flex-shrink: 0;
+  font-weight: 600;
+  color: #1f2937;
+  white-space: nowrap;
+  margin-left: 8px;
+  font-size: 0.9em;
+  align-self: flex-start;
+  padding-top: 2px;
+}
+
+/* Pour les écrans très petits */
+@media (max-width: 480px) {
+  .service-price {
+    font-size: 0.9em;
+  }
+}
+
+/* Correction des marges et paddings */
+.planity-container,
+.planity-content,
+.planity-main-content {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  max-width: 100% !important;
+}
+
+/* Alignement des boutons */
+.booking-actions,
+.step-actions {
+  justify-content: flex-start !important;
+  padding-left: 0 !important;
+}
+
+/* Correction pour les écrans mobiles */
+@media (max-width: 768px) {
+  .booking-main-content,
+  .booking-step-infos-modern,
+  .booking-step-date-modern,
+  .booking-step-service,
+  .booking-step-employee,
+  .booking-step-confirm {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+  
+  .service-card,
+  .employee-card {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
+
 /* ===== HARMONISATION GLOBALE PALETTE PLANITY ===== */
 /* Forcer la palette noir/gris/blanc sur tous les éléments */
 
