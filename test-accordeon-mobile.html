@@ -215,16 +215,13 @@
                 const item = this.parentElement;
                 const isOpen = item.classList.contains('open');
                 
-                // Fermer tous les autres accordéons
-                document.querySelectorAll('.accordion-item').forEach(otherItem => {
-                    otherItem.classList.remove('open');
-                    otherItem.querySelector('.accordion-arrow').textContent = '▼';
-                });
-                
-                // Ouvrir/fermer l'accordéon cliqué
+                // Ouvrir/fermer l'accordéon cliqué sans fermer les autres
                 if (!isOpen) {
                     item.classList.add('open');
                     this.querySelector('.accordion-arrow').textContent = '▲';
+                } else {
+                    item.classList.remove('open');
+                    this.querySelector('.accordion-arrow').textContent = '▼';
                 }
             });
         });

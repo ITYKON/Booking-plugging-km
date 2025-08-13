@@ -90,7 +90,6 @@ if (isset($_POST['add_category'])) {
     $categories = IB_Categories::get_all(); // refresh
 }
 $services = IB_Services::get_all();
-$filtered_services = $services; // Initialisation de filtered_services avec tous les services
 $edit_service = null;
 if (isset($_GET['action']) && $_GET['action'] === 'edit' && isset($_GET['id'])) {
     $edit_service = IB_Services::get_by_id((int)$_GET['id']);
@@ -127,141 +126,97 @@ if (isset($_GET['action']) && $_GET['action'] === 'edit' && isset($_GET['id'])) 
     </form>
     <!-- Interface moderne des services -->
     
-    <div class="ib-services-container">
-      <div class="ib-services-grid-compact">
+    <div class="ib-services-grid-compact">
       <?php
       // Logique de filtrage PHP
       if (isset($_GET['reset']) && $_GET['reset'] == '1') {
           $_GET['service_name'] = '';
           $_GET['service_category'] = '';
       }
-      
-      // Grouper les services par catégorie
-      $services_by_category = [];
-      $uncategorized_services = [];
-      
-      foreach ($services as $service) {
-          if (!empty($service->category_id)) {
-              $services_by_category[$service->category_id][] = $service;
-          } else {
-              $uncategorized_services[] = $service;
-          }
+      $filtered_services = $services;
+      if (!empty($_GET['service_name']) || !empty($_GET['service_category'])) {
+          $filtered_services = array_filter($services, function($srv) {
+              $ok = true;
+              if (!empty($_GET['service_name'])) {
+                  $ok = $ok && (stripos($srv->name, $_GET['service_name']) !== false);
+              }
+              if (!empty($_GET['service_category'])) {
+                  $ok = $ok && ($srv->category_id == $_GET['service_category']);
+              }
+              return $ok;
+          });
       }
-      
-      // Afficher d'abord les services non catégorisés s'il y en a
-      if (!empty($uncategorized_services)): ?>
-        <div class="ib-category-section">
-          <div class="ib-category-header">
-            <i class="fas fa-tag"></i>
-            <span>Sans catégorie</span>
-          </div>
-          <div class="ib-category-services">
-            <?php foreach($uncategorized_services as $service): ?>
-              <div class="ib-service-card-compact" data-service-id="<?php echo $service->id; ?>">
-                <div class="ib-service-card-content">
-                  <h3 class="ib-service-name"><?php echo esc_html($service->name); ?></h3>
-                  <div class="ib-service-details">
-                    <span class="ib-service-duration"><?php echo esc_html($service->duration); ?> min</span>
-                    <span class="ib-service-price">
-                      <?php 
-                      if ($service->variable_price) {
-                          $min = round(floatval($service->min_price), 2);
-                          $max = round(floatval($service->max_price), 2);
-                          if ($min > 0 && $max > 0) {
-                              echo 'à partir de ' . number_format($min, 0, ',', ' ') . ' - ' . number_format($max, 0, ',', ' ') . ' €';
-                          } elseif ($min > 0) {
-                              echo 'à partir de ' . number_format($min, 0, ',', ' ') . ' €';
-                          }
-                      } else {
-                          echo number_format($service->price, 2, ',', ' ') . ' €';
-                      }
-                      ?>
-                    </span>
-                  </div>
-                </div>
-                <div class="ib-service-actions">
-                  <button class="ib-btn-edit" onclick="openEditServiceModal(<?php echo htmlspecialchars(json_encode($service), ENT_QUOTES, 'UTF-8'); ?>)">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button class="ib-btn-delete" onclick="confirmDeleteService(<?php echo $service->id; ?>, '<?php echo esc_js($service->name); ?>')">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
-              </div>
-            <?php endforeach; ?>
-          </div>
+
+      if (empty($filtered_services)): ?>
+        <div class="ib-no-services">
+          <div class="ib-no-services-icon">🛠️</div>
+          <h3>Aucun service trouvé</h3>
+          <p>Aucun service ne correspond à vos critères de recherche.</p>
+          <button class="ib-btn accent" onclick="document.getElementById('btn-add-service').click()">+ Ajouter un service</button>
         </div>
-      <?php endif;
-      
-      // Afficher les services par catégorie
-      foreach ($categories as $category): 
-          $category_services = $services_by_category[$category->id] ?? [];
-          if (empty($category_services)) continue;
-      ?>
-        <div class="ib-category-section">
-          <div class="ib-category-header">
-            <i class="fas fa-<?php echo esc_attr($category->icon ?: 'tag'); ?>"></i>
-            <span><?php echo esc_html($category->name); ?></span>
-          </div>
-          <div class="ib-category-services">
-            <?php foreach($category_services as $service): ?>
-              <div class="ib-service-card-compact" data-service-id="<?php echo $service->id; ?>">
-                <div class="ib-service-card-content">
-                  <h3 class="ib-service-name"><?php echo esc_html($service->name); ?></h3>
-                  <div class="ib-service-details">
-                    <span class="ib-service-duration"><?php echo esc_html($service->duration); ?> min</span>
-                    <span class="ib-service-price">
-                      <?php 
-                      if ($service->variable_price) {
-                          $min = round(floatval($service->min_price), 2);
-                          $max = round(floatval($service->max_price), 2);
-                          if ($min > 0 && $max > 0) {
-                              echo 'à partir de ' . number_format($min, 0, ',', ' ') . ' - ' . number_format($max, 0, ',', ' ') . ' €';
-                          } elseif ($min > 0) {
-                              echo 'à partir de ' . number_format($min, 0, ',', ' ') . ' €';
-                          }
-                      } else {
-                          echo number_format($service->price, 2, ',', ' ') . ' €';
-                      }
-                      ?>
-                    </span>
-                  </div>
-                </div>
-                <div class="ib-service-actions">
-                  <button class="ib-btn-edit" onclick="openEditServiceModal(<?php echo htmlspecialchars(json_encode($service), ENT_QUOTES, 'UTF-8'); ?>)">
-                    <i class="fas fa-edit"></i>
-                  </button>
-                  <button class="ib-btn-delete" onclick="confirmDeleteService(<?php echo $service->id; ?>, '<?php echo esc_js($service->name); ?>')">
-                    <i class="fas fa-trash"></i>
-                  </button>
-                </div>
+      <?php else: ?>
+        <?php foreach($filtered_services as $service): ?>
+          <div class="ib-service-card-compact">
+            <div class="ib-service-main-info">
+              <h3 class="ib-service-name">
+                <?php echo esc_html($service->name); ?>
+                <?php if ($service->variable_price): ?>
+                  <?php
+                  $min = round(floatval($service->min_price), 2);
+                  $max = round(floatval($service->max_price), 2);
+                  if ($min > 0 && $max > 0) {
+                      echo " à partir de " . number_format($min, 0, ',', ' ') . "-" . number_format($max, 0, ',', ' ') . " DA";
+                  } elseif ($min > 0) {
+                      echo " à partir de " . number_format($min, 0, ',', ' ') . " DA";
+                  }
+                  ?>
+                <?php else: ?>
+                  <?php
+                  $prix = round($service->price, 2);
+                  if ($prix > 0) {
+                      echo " " . number_format($prix, 0, ',', ' ') . " DA";
+                  }
+                  ?>
+                <?php endif; ?>
+              </h3>
+              <p class="ib-service-description">
+                <?php
+                  $cat = null;
+                  foreach($categories as $c) if($c->id == $service->category_id) $cat = $c;
+                  echo $cat ? esc_html($cat->name) : 'Service personnalisé';
+                ?>
+                <?php
+                  $service_emps = IB_Service_Employees::get_employees_for_service($service->id);
+                  if (!empty($service_emps)) {
+                    $names = array();
+                    foreach($service_emps as $emp_id) {
+                      $emp = IB_Employees::get_by_id($emp_id);
+                      if ($emp && isset($emp->name)) $names[] = esc_html($emp->name);
+                    }
+                    if (!empty($names)) {
+                      echo " - " . implode(', ', $names);
+                    }
+                  }
+                ?>
+              </p>
+            </div>
+            <div class="ib-service-meta">
+              <span class="ib-service-duration"><?php echo esc_html($service->duration); ?>min</span>
+              <div class="ib-service-actions" style="display:flex;gap:0.5rem;">
+                <a href="admin.php?page=institut-booking-services&action=edit&id=<?php echo $service->id; ?>" class="ib-service-choose-btn" style="background:#e9aebc;padding:0.4rem 0.8rem;font-size:0.8rem;">
+                  Éditer
+                </a>
+                <a href="admin.php?page=institut-booking-services&action=delete&id=<?php echo $service->id; ?>" class="ib-service-choose-btn" style="background:#e9aebc;padding:0.4rem 0.8rem;font-size:0.8rem;" onclick="return confirm('Supprimer ce service ?')">
+                  Supprimer
+                </a>
               </div>
-            <?php endforeach; ?>
-          </div>
-        </div>
-      <?php endforeach; 
-      
-      // Vérifier s'il n'y a aucun service à afficher
-      if (empty($services) && empty($uncategorized_services)): ?>
-        <div class="ib-category-section">
-          <div class="ib-category-header">
-            <i class="fas fa-inbox"></i>
-            <span>Aucun service trouvé</span>
-          </div>
-          <div class="ib-category-services">
-            <div class="ib-no-results">
-              <p>Aucun service n'a été trouvé dans la base de données.</p>
-              <button class="ib-btn accent" onclick="document.getElementById('btn-add-service').click()">
-                <i class="fas fa-plus"></i> Ajouter un service
-              </button>
             </div>
           </div>
-        </div>
+        <?php endforeach; ?>
       <?php endif; ?>
-      </div>
     </div>
 
-    <?php if (isset($filtered_services) && !empty($filtered_services) && count($filtered_services) > 5): ?>
+    <?php if (!empty($filtered_services) && count($filtered_services) > 5): ?>
       <div style="text-align:center;margin-top:1.5rem;">
         <a href="#" class="ib-services-view-more" style="color:#4299e1;text-decoration:none;font-weight:500;">
           Voir les <?php echo count($filtered_services) - 5; ?> autres prestations

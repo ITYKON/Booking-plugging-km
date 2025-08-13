@@ -1528,43 +1528,18 @@ window.scrollToProgressBar = function(callback, delay = 300) {
         accordionHeader.onclick = () => {
           const isOpen = accordionItem.classList.contains("open");
 
-          // Fermer tous les autres accordéons
-          accordionContainer
-            .querySelectorAll(".accordion-item")
-            .forEach((item) => {
-              item.classList.remove("open");
-              item.querySelector(".accordion-arrow").textContent = "▼";
-            });
-
-          // Ouvrir/fermer l'accordéon cliqué
+          // Ouvrir/fermer l'accordéon cliqué sans fermer les autres
           if (!isOpen) {
             // Ouvrir l'accordéon
             accordionItem.classList.add("open");
             accordionHeader.querySelector(".accordion-arrow").textContent = "▲";
-
-            // Attendre que l'animation d'ouverture soit terminée, puis ajuster la position
-            setTimeout(() => {
-              const headerRect = accordionHeader.getBoundingClientRect();
-              const progressBar = document.querySelector('.planity-progress-bar');
-              const offset = progressBar ? progressBar.offsetHeight + 20 : 20;
-
-              // Si l'en-tête n'est pas visible ou partiellement caché, ajuster la position
-              // Mais seulement si l'utilisateur n'est pas en train de faire défiler manuellement
-              if (headerRect.top < offset) {
-                // Vérifier si l'utilisateur est proche du haut de la page
-                const isNearTop = window.pageYOffset < 100;
-                
-                // Ne pas faire de scroll automatique si l'utilisateur a déjà fait défiler
-                if (isNearTop) {
-                  const targetPosition = window.pageYOffset + headerRect.top - offset;
-                  window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                  });
-                }
-              }
-            }, 300); // Attendre la fin de l'animation CSS (0.25s + marge)
+          } else {
+            // Fermer l'accordéon
+            accordionItem.classList.remove("open");
+            accordionHeader.querySelector(".accordion-arrow").textContent = "▼";
           }
+
+          // Supprimé le scroll automatique pour permettre une expérience naturelle
         };
 
         accordionItem.appendChild(accordionHeader);
@@ -1790,38 +1765,8 @@ window.scrollToProgressBar = function(callback, delay = 300) {
 
       console.log('📱 Tous les services ont été étendus sur mobile');
 
-      // Ajouter un gestionnaire d'événements pour le clic sur les en-têtes d'accordéon
-      setTimeout(() => {
-        const accordionHeaders = document.querySelectorAll('.accordion-header');
-        accordionHeaders.forEach(header => {
-          header.addEventListener('click', function() {
-            // Attendre que l'animation d'ouverture soit terminée
-            setTimeout(() => {
-              const accordionItem = this.closest('.accordion-item');
-              if (accordionItem.classList.contains('open')) {
-                // Faire défiler jusqu'à l'élément ouvert
-                const rect = accordionItem.getBoundingClientRect();
-                const isInViewport = (
-                  rect.top >= 0 &&
-                  rect.left >= 0 &&
-                  rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-                  rect.right <= (window.innerWidth || document.documentElement.clientWidth)
-                );
-                
-                // Désactivé pour préserver le comportement naturel du dropdown
-                // if (!isInViewport) {
-                //   // Si l'élément n'est pas entièrement visible, faire défiler doucement
-                //   accordionItem.scrollIntoView({
-                //     behavior: 'smooth',
-                //     block: 'center',
-                //     inline: 'nearest'
-                //   });
-                // }
-              }
-            }, 50); // Délai pour laisser l'animation se terminer
-          });
-        });
-      }, 100);
+      // Supprimé le gestionnaire d'événements pour le clic sur les en-têtes d'accordéon
+      // pour éviter tout scroll automatique
     }
 
     function createServiceItem(srv) {

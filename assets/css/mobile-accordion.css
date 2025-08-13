@@ -78,7 +78,7 @@
 
 /* Style quand l'accordéon est ouvert */
 .accordion-item.open .accordion-content {
-  max-height: 80vh; /* Hauteur maximale de 80% de la hauteur de l'écran */
+  max-height: 500px; /* Hauteur fixe plus grande pour éviter le scroll forcé */
   /* Ajouter un peu d'espace en bas pour éviter que le contenu ne soit collé au bord */
   padding-bottom: 10px;
 }
@@ -115,11 +115,11 @@
 }
 
 .accordion-item.open .accordion-content {
-  animation: accordionOpen 0.25s ease-out forwards;
+  /* Supprimé l'animation qui causait le scroll forcé */
 }
 
 .accordion-item:not(.open) .accordion-content {
-  animation: accordionClose 0.2s ease-in forwards;
+  /* Supprimé l'animation qui causait le scroll forcé */
 }
 
 .accordion-arrow {
