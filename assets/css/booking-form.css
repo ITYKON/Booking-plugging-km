@@ -3953,7 +3953,7 @@ body,
   animation: ib-fadein 0.4s forwards;
   background: #fff0f3;
   border-radius: 8px;
-  padding: 0.4em 0.7em 0.4em 2em;
+  padding: 0.4em 0.7em;
   position: relative;
 }
 .ib-error-msg svg {
@@ -4713,274 +4713,50 @@ body,
 }
 
 /* Champ téléphone pastel chic avec intl-tel-input */
-.phone-field-modern .iti {
-  width: 100%;
-  border-radius: 16px;
-  background: #fbeff3;
-  box-shadow: 0 2px 16px #e9aebc18;
-  border: 1.5px solid #a48d78;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  min-height: 48px;
-  position: relative;
-}
-.phone-field-modern .iti__flag-container {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center;
-  height: 100%;
-  padding-left: 1em;
-}
-.phone-field-modern .iti input[type="tel"] {
-  width: 100%;
-  border: none;
-  background: transparent;
-  border-radius: 16px;
-  padding: 1.1em 1.1em 1.1em 4.2em;
-  font-size: 1.09em;
-  color: #a48d78;
-  box-shadow: none;
-  outline: none;
-  height: 48px;
-  line-height: 48px;
-}
-.phone-field-modern .iti input[type="tel"]::placeholder {
-  color: #c4b39a;
-  opacity: 1;
-}
-.phone-field-modern .iti__dial-code {
-  color: #a48d78 !important;
-  font-weight: 600;
-  font-size: 1.08em;
-  background: transparent;
-  margin-left: 0.2em;
-}
-@media (max-width: 600px) {
-  .phone-field-modern .iti input[type="tel"] {
-    font-size: 1em;
-    padding-left: 2.7em;
-    height: 44px;
-    line-height: 44px;
-  }
-}
-
-.phone-fields-row,
-.country-code-select,
-.phone-number-input {
-  display: none !important;
-}
-
-.phone-field-modern .iti {
-  width: 100%;
-  border-radius: 16px;
-  background: #fbeff3;
-  box-shadow: 0 2px 16px #e9aebc18;
-  border: 1.5px solid #a48d78;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  min-height: 48px;
-  position: relative;
-  overflow: visible;
-}
-.phone-field-modern .iti__flag-container {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center;
-  height: 100%;
-  padding-left: 1em;
-  background: transparent;
-  border-radius: 16px 0 0 16px;
-}
-.phone-field-modern .iti input[type="tel"] {
-  width: 100%;
-  border: none;
-  background: transparent;
-  border-radius: 16px;
-  padding: 1.1em 1.1em 1.1em 3.5em;
-  font-size: 1.09em;
-  color: #a48d78;
-  box-shadow: none;
-  outline: none;
-  height: 48px;
-  line-height: 48px;
-}
-.phone-field-modern .iti input[type="tel"]::placeholder {
-  color: #c4b39a;
-  opacity: 1;
-}
-.phone-field-modern .iti__dial-code {
-  color: #c4b39a !important;
-  font-weight: 600;
-  font-size: 1.08em;
-  background: transparent;
-  margin-left: 0.2em;
-}
-.iti__country-list {
-  border-radius: 16px !important;
-  background: #f8f8f8 !important;
-  border: 1.5px solid #606060 !important;
-  box-shadow: 0 8px 32px #e9aebc33 !important;
-  font-size: 1em;
-  color: #606060 !important;
-  margin-top: 4px !important;
-  left: 0 !important;
-  right: auto !important;
-  min-width: 240px !important;
-  max-width: 100% !important;
-  width: 100% !important;
-  z-index: 9999 !important;
-  overflow: auto !important;
-  max-height: 260px !important;
-  animation: fadeInDropdown 0.18s;
-}
-@keyframes fadeInDropdown {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-.iti--container {
-  z-index: 99999 !important;
-}
-.iti__country.iti__highlight {
-  background: #e5e7eb !important;
-  color: #374151 !important;
-}
-.iti__country {
-  color: #606060 !important;
-  background: transparent !important;
-  font-weight: 500;
-  transition: background 0.18s, color 0.18s;
-}
-
-/* Palette neutre gris/blanc/noir */
-:root {
-  --ib-beige: #e5e7eb;
-  --ib-cream: #f9fafb;
-  --ib-taupe: #6b7280;
-  --ib-dark: #111827;
-  --ib-light: #f3f4f6;
-}
-
-body,
-.booking-main-content {
-  background: var(--ib-cream) !important;
-  color: var(--ib-dark);
-  font-family: "Inter", "Roboto", "Segoe UI", Arial, sans-serif;
-}
-
-.booking-step-infos-modern,
-.booking-ticket-modern {
-  background: #f8f8f8 !important;
-  color: #606060 !important;
-  border: none !important;
-}
-
-.input-group-modern,
 .phone-field-modern {
-  background: var(--ib-cream);
-  border-radius: 0.8em;
-  border: 1px solid var(--ib-light);
-  margin-bottom: 1.1em;
-  box-shadow: none;
+  margin: 32px 0 !important;
+  padding: 0 16px !important;
 }
 
-.booking-input-modern,
-#client-phone {
-  background: transparent;
-  border: none;
-  color: var(--ib-dark);
-  font-size: 1.08em;
-  padding: 1em 1.1em 0.7em 2.2em;
-  border-radius: 0.8em;
-  outline: none;
+.phone-field-modern .iti {
+  border-radius: 14px !important;
+  padding: 2px !important;
+  margin-top: 8px !important;
 }
 
-.booking-input-modern:focus,
-#client-phone:focus {
-  box-shadow: 0 0 0 2px var(--ib-beige) 33;
-  background: var(--ib-light);
+.phone-field-modern input[type="tel"] {
+  width: 100% !important;
+  padding: 12px 15px !important;
+  font-size: 16px !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 8px !important;
+  background: #f9fafb !important;
 }
 
-.floating-label-modern {
-  color: var(--ib-taupe);
-  font-weight: 500;
-  left: 2.2em;
-  background: transparent;
+/* ===== CASE À COCHER RGPD ===== */
+.rgpd-container {
+  margin: 25px 15px !important;
+  padding: 15px !important;
+  background: #f9fafb;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
 }
 
-.input-icon-modern svg {
-  stroke: #606060 !important;
+/* Style amélioré pour la case à cocher RGPD */
+.ib-legal-checkbox {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 14px !important;
+  cursor: pointer;
+  padding: 18px 20px !important;
+  margin: 24px 0 !important;
+  background: #f8f9fa !important;
+  border-radius: 14px !important;
+  border: 1px solid #e5e7eb !important;
+  transition: all 0.2s ease !important;
+  line-height: 1.5 !important;
 }
 
-.btn-modern,
-.actions .next,
-.actions .back {
-  background: #f8f8f8 !important;
-  color: #606060 !important;
-  border: none !important;
-  border-radius: 1.2em;
-  font-weight: 600;
-  font-size: 1.08em;
-  padding: 0.8em 2.2em;
-  box-shadow: none;
-  transition: background 0.18s, box-shadow 0.18s;
-  letter-spacing: 0.01em;
-}
-.btn-modern:hover,
-.actions .next:hover,
-.actions .back:hover {
-  background: #606060 !important;
-  color: #f8f8f8 !important;
-}
-
-.ib-error-msg {
-  background: var(--ib-light);
-  color: var(--ib-dark);
-  border-radius: 0.7em;
-  padding: 0.5em 1em;
-  margin-top: 0.3em;
-  font-weight: 500;
-  font-size: 0.97em;
-  border: 1px solid var(--ib-beige);
-}
-
-.booking-ticket-modern {
-  border: 1.5px solid var(--ib-light);
-  background: #fff;
-  color: var(--ib-dark);
-}
-.ticket-success-badge {
-  background: #606060;
-  color: #f8f8f8 !important;
-  border-radius: 1.2em;
-  border-color: none !important;
-  font-weight: 600;
-  font-size: 1.1em;
-  padding: 0.6em 2em;
-  margin-bottom: 1.2em;
-  box-shadow: none;
-}
-.ticket-success-message {
-  color: #606060;
-  font-size: 1.13em;
-  margin-bottom: 1.2em;
-}
-.ticket-label {
-  color: #606060;
-  font-weight: 600;
-}
-.ticket-value {
-  color: var(--ib-dark);
-  font-weight: 500;
-}
-/* Personnalisation case à cocher RGPD */
 .ib-legal-checkbox input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
@@ -5571,11 +5347,18 @@ textarea:focus {
 }
 
 .booking-input-modern,
+/* Style amélioré pour le champ téléphone */
 #client-phone {
   width: 100%;
   background: rgba(255, 255, 255, 0.95) !important;
-  border: 1.5px solid #f8f8f8 !important;
+  border: 1.5px solid #e5e7eb !important;
   border-radius: 1.1em !important;
+  padding: 14px 16px !important;
+  font-size: 16px !important;
+  min-height: 52px !important;
+  box-sizing: border-box !important;
+  transition: all 0.2s ease !important;
+  margin: 8px 0 16px 0 !important;
   font-size: 1.13em;
   color: #606060 !important;
   padding: 1.1em 1.1em 1.1em 2.8em;
@@ -6675,10 +6458,10 @@ input[type="checkbox"] {
   }
 
   .phone-field-modern label {
-    color: #64748b !important;
-    font-size: 14px !important;
+    color: #374151 !important;
+    font-size: 15px !important;
     font-weight: 600 !important;
-    margin-bottom: 8px !important;
+    margin-bottom: 10px !important;
     display: block !important;
     letter-spacing: -0.025em !important;
   }
@@ -7051,8 +6834,6 @@ input[type="checkbox"] {
     font-weight: 500 !important;
     font-size: 14px !important;
     flex: 1 !important;
-    margin: 0 !important;
-    padding: 0 !important;
   }
 
   /* Codes pays avec sélecteurs ultra-spécifiques */
@@ -7069,7 +6850,6 @@ input[type="checkbox"] {
     padding: 2px 6px !important;
     border-radius: 4px !important;
     margin-left: auto !important;
-    margin-right: 0 !important;
   }
 
   /* Drapeaux avec sélecteurs ultra-spécifiques */
@@ -7189,6 +6969,34 @@ input[type="checkbox"] {
 
 /* RESPONSIVE MOBILE - ÉTAPE VOS INFORMATIONS PLANITY */
 @media (max-width: 768px) {
+  /* Amélioration du champ téléphone sur mobile */
+  .phone-field-modern {
+    margin: 32px 16px !important;
+    padding: 0 12px !important;
+    width: calc(100% - 32px) !important;
+    box-sizing: border-box !important;
+  }
+  
+  .phone-field-modern .iti {
+    border-radius: 14px !important;
+    padding: 4px 12px !important;
+    border: 1px solid #e5e7eb !important;
+    background: white !important;
+  }
+  
+  /* Amélioration de la case à cocher RGPD sur mobile */
+  .ib-legal-checkbox {
+    padding: 22px 20px !important;
+    margin: 28px 12px !important;
+    border-radius: 16px !important;
+  }
+  
+  .ib-legal-checkbox input[type="checkbox"] {
+    min-width: 22px !important;
+    min-height: 22px !important;
+    margin-top: 4px !important;
+  }
+  
   /* Container mobile - Style Planity avec padding amélioré */
   .booking-step-infos-modern {
     padding: 1.5rem 1.5rem !important;

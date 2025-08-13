@@ -239,20 +239,27 @@ jQuery(document).ready(function ($) {
       const slotsContainer = document.querySelector('.slots-col, .slots-available');
       if (!slotsContainer) return;
       
-      // Calculer la position pour voir à la fois le calendrier et les créneaux
-      const calendarBottom = document.querySelector('.calendar-col').getBoundingClientRect().bottom;
-      const slotsTop = slotsContainer.getBoundingClientRect().top;
-      const windowHeight = window.innerHeight;
+      // Calculer la position pour voir les créneaux sans aller trop bas
+      const slotsRect = slotsContainer.getBoundingClientRect();
+      const scrollPosition = window.pageYOffset + slotsRect.top - 20; // 20px d'espace en haut
       
-      // Calculer la position de défilement pour voir les deux éléments
-      const scrollPosition = window.pageYOffset + slotsTop - (windowHeight * 0.3);
+      // Calculer la position maximale de défilement pour éviter le footer
+      const pageHeight = document.documentElement.scrollHeight;
+      const viewportHeight = window.innerHeight;
+      const maxScroll = pageHeight - viewportHeight - 50; // 50px de marge avant le footer
+      
+      // Utiliser la plus petite valeur entre la position calculée et le maximum
+      const finalScrollPosition = Math.min(scrollPosition, maxScroll);
       
       // Désactiver temporairement le smooth scroll pour un défilement précis
       document.documentElement.style.scrollBehavior = 'auto';
       document.body.style.scrollBehavior = 'auto';
       
       // Faire défiler à la position calculée
-      window.scrollTo({ top: scrollPosition, behavior: 'auto' });
+      window.scrollTo({ 
+        top: finalScrollPosition, 
+        behavior: 'auto' 
+      });
       
       // Réactiver le smooth scroll après un court délai
       setTimeout(() => {
