@@ -151,37 +151,41 @@ jQuery(document).ready(function ($) {
   // Gestion des créneaux disponibles
   function loadAvailableSlots(date) {
     if (!bookingState.selectedService || !bookingState.selectedEmployee) {
-      return;
+      return Promise.resolve();
     }
 
     const serviceId = bookingState.selectedService.id;
     const employeeId = bookingState.selectedEmployee.id;
     const selectedDate = date || bookingState.selectedDate;
 
-    jQuery.ajax({
-      url: window.ajaxurl,
-      type: "POST",
-      data: {
-        action: "get_available_slots",
-        employee_id: employeeId,
-        service_id: serviceId,
-        date: selectedDate,
-      },
-      success: function (response) {
-        if (response.success) {
-          displayAvailableSlots(response.data);
-        } else {
-          console.error(
-            "Erreur lors du chargement des créneaux :",
-            response.data
-          );
+    return new Promise((resolve) => {
+      jQuery.ajax({
+        url: window.ajaxurl,
+        type: "POST",
+        data: {
+          action: "get_available_slots",
+          employee_id: employeeId,
+          service_id: serviceId,
+          date: selectedDate,
+        },
+        success: function (response) {
+          if (response.success) {
+            displayAvailableSlots(response.data);
+          } else {
+            console.error(
+              "Erreur lors du chargement des créneaux :",
+              response.data
+            );
+            displayAvailableSlots([]);
+          }
+          resolve();
+        },
+        error: function (xhr, status, error) {
+          console.error("Erreur AJAX :", error);
           displayAvailableSlots([]);
-        }
-      },
-      error: function (xhr, status, error) {
-        console.error("Erreur AJAX :", error);
-        displayAvailableSlots([]);
-      },
+          resolve();
+        },
+      });
     });
   }
 
@@ -225,15 +229,57 @@ jQuery(document).ready(function ($) {
     renderActions();
   }
 
+  // Fonction pour le défilement vers les créneaux en gardant le calendrier visible
+  function scrollToSlots() {
+    const isMobile = window.innerWidth <= 768;
+    if (!isMobile) return;
+    
+    setTimeout(() => {
+      // Trouver le conteneur des créneaux
+      const slotsContainer = document.querySelector('.slots-col, .slots-available');
+      if (!slotsContainer) return;
+      
+      // Calculer la position pour voir à la fois le calendrier et les créneaux
+      const calendarBottom = document.querySelector('.calendar-col').getBoundingClientRect().bottom;
+      const slotsTop = slotsContainer.getBoundingClientRect().top;
+      const windowHeight = window.innerHeight;
+      
+      // Calculer la position de défilement pour voir les deux éléments
+      const scrollPosition = window.pageYOffset + slotsTop - (windowHeight * 0.3);
+      
+      // Désactiver temporairement le smooth scroll pour un défilement précis
+      document.documentElement.style.scrollBehavior = 'auto';
+      document.body.style.scrollBehavior = 'auto';
+      
+      // Faire défiler à la position calculée
+      window.scrollTo({ top: scrollPosition, behavior: 'auto' });
+      
+      // Réactiver le smooth scroll après un court délai
+      setTimeout(() => {
+        document.documentElement.style.scrollBehavior = 'smooth';
+        document.body.style.scrollBehavior = 'smooth';
+      }, 100);
+    }, 300); // Petit délai pour laisser le temps au chargement des créneaux
+  }
+
   // Écouteur pour le changement de date
   $(document).on("change", "#booking-date", function () {
     const date = $(this).val();
     bookingState.selectedDate = date;
-    loadAvailableSlots(date);
+    localStorage.setItem("bookingState", JSON.stringify(bookingState));
+
+    // Charger les créneaux disponibles pour cette date
+    loadAvailableSlots(date).then(() => {
+      // Faire défiler vers les créneaux une fois chargés
+      scrollToSlots();
+    });
   });
 
   // Initialiser le chargement des créneaux si une date est déjà sélectionnée
   if (bookingState.selectedDate) {
-    loadAvailableSlots(bookingState.selectedDate);
+    loadAvailableSlots(bookingState.selectedDate).then(() => {
+      // Ne pas défiler automatiquement au chargement initial
+      // pour éviter les comportements indésirables
+    });
   }
 });

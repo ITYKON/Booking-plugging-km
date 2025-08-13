@@ -2245,14 +2245,26 @@ body {
 
 /* Style Planity - Épuré Noir/Gris/Blanc */
 .booking-step-date-modern {
-  background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-  border: 1px solid #f1f5f9;
-  padding: 2rem;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-start;
+  margin: 20px 0;
+  padding: 15px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  /* Assurer que le défilement s'arrête précisément ici */
+  scroll-margin-top: 80px;
+  position: relative;
+}
+
+/* Style pour le titre des créneaux disponibles */
+.slots-available-title {
+  font-size: 1.2em;
+  font-weight: 600;
+  margin: 0 0 15px 0;
+  padding: 0;
+  color: #333;
+  /* S'assurer que le titre reste bien en haut */
+  position: relative;
+  top: -5px; /* Ajustement fin du positionnement */
   justify-content: center;
   gap: 3rem;
   min-width: 0;
@@ -5823,6 +5835,7 @@ input[type="checkbox"] {
     width: 100% !important;
     line-height: 1.3 !important;
     display: block !important;
+    scroll-margin-top: 100px; /* Ajuste la position de défilement */
   }
   
   /* Style du sous-titre "Choisissez une date" */
@@ -5848,6 +5861,9 @@ input[type="checkbox"] {
     text-align: left !important;
     width: 100% !important;
     box-sizing: border-box !important;
+    scroll-margin-top: 20px; /* Ajuste la position de défilement */
+    position: relative;
+    z-index: 1;
   }
   
   /* Style du message "Sélectionnez une date" */
@@ -5860,6 +5876,7 @@ input[type="checkbox"] {
     font-weight: 500 !important;
     width: 100% !important;
     box-sizing: border-box !important;
+    scroll-margin-top: 20px; /* Ajuste la position de défilement */
   }
   
   /* Conteneur parent pour forcer l'alignement à gauche */
@@ -5935,6 +5952,7 @@ input[type="checkbox"] {
     padding: 0.5rem !important;
     margin: 0 !important;
     box-sizing: border-box !important;
+    scroll-margin-top: 20px; /* Ajuste la position de défilement */
   }
 
   /* Boutons 6 colonnes - Optimisation maximale de l'espace */
