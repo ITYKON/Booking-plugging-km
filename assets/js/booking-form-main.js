@@ -2,10 +2,13 @@
 // Initialisation immédiate des variables globales
 window.bookingState = window.bookingState || {
   step: 1,
+  selectedCategory: "ALL",
   selectedService: null,
   selectedEmployee: null,
   selectedDate: null,
   selectedSlot: null,
+  services: window.bookingServices || [],
+  employees: window.bookingEmployees || [],
   client: {
     firstname: "",
     lastname: "",
@@ -349,7 +352,8 @@ window.scrollToProgressBar = function(callback, delay = 300) {
   }
 
   function initBooking() {
-    var bookingState = {
+    // Use the global bookingState object
+    window.bookingState = window.bookingState || {
       step: 1,
       selectedCategory: "ALL",
       selectedService: null,
@@ -365,11 +369,15 @@ window.scrollToProgressBar = function(callback, delay = 300) {
         phone: "",
       },
     };
+    var bookingState = window.bookingState;
 
     // Fonction pour mettre à jour l'état
     function updateBookingState() {
+      // Synchroniser avec le bookingState global
+      Object.assign(window.bookingState, bookingState);
+      
       // Sauvegarde l'état dans le localStorage pour la persistance
-      localStorage.setItem("bookingState", JSON.stringify(bookingState));
+      localStorage.setItem("bookingState", JSON.stringify(window.bookingState));
 
       // Mettre à jour la barre de progression
       if (typeof window.updateProgressBar === "function") {
@@ -408,6 +416,12 @@ window.scrollToProgressBar = function(callback, delay = 300) {
         window.bookingState.selectedEmployee = null;
         window.bookingState.selectedDate = null;
         window.bookingState.selectedSlot = null;
+        window.bookingState.client = {
+          firstname: "",
+          lastname: "",
+          email: "",
+          phone: "",
+        };
 
         localStorage.removeItem("bookingState");
       }
@@ -417,7 +431,9 @@ window.scrollToProgressBar = function(callback, delay = 300) {
       renderSidebar();
 
       // Mettre à jour la barre de progression globale
-      window.updateProgressBar();
+      if (typeof window.updateProgressBar === "function") {
+        window.updateProgressBar();
+      }
 
       // Déclencher un événement pour notifier le changement d'étape
       document.dispatchEvent(
@@ -1533,12 +1549,19 @@ window.scrollToProgressBar = function(callback, delay = 300) {
               const offset = progressBar ? progressBar.offsetHeight + 20 : 20;
 
               // Si l'en-tête n'est pas visible ou partiellement caché, ajuster la position
+              // Mais seulement si l'utilisateur n'est pas en train de faire défiler manuellement
               if (headerRect.top < offset) {
-                const targetPosition = window.pageYOffset + headerRect.top - offset;
-                window.scrollTo({
-                  top: targetPosition,
-                  behavior: 'smooth'
-                });
+                // Vérifier si l'utilisateur est proche du haut de la page
+                const isNearTop = window.pageYOffset < 100;
+                
+                // Ne pas faire de scroll automatique si l'utilisateur a déjà fait défiler
+                if (isNearTop) {
+                  const targetPosition = window.pageYOffset + headerRect.top - offset;
+                  window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                  });
+                }
               }
             }, 300); // Attendre la fin de l'animation CSS (0.25s + marge)
           }

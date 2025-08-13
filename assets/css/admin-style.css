@@ -471,15 +471,78 @@
   letter-spacing: 0.5px;
 }
 
+/* Conteneur principal des services avec défilement */
+.ib-services-container {
+  max-height: none;
+  height: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  margin-top: 1.5rem;
+  padding: 0;
+  position: relative;
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: auto;
+  scroll-behavior: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Grille des services */
 .ib-services-grid-compact {
   display: flex;
   flex-direction: column;
-  gap: 0;
-  margin-top: 1.5rem;
+  gap: 1.5rem;
+  padding: 0;
+  min-height: 0;
+  height: 100%;
+  width: 100%;
+}
+
+/* Catégorie de services */
+.ib-category-section {
   background: #ffffff;
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  margin: 0;
+  break-inside: avoid;
+  page-break-inside: avoid;
+  width: 100%;
+}
+
+/* En-tête de catégorie */
+.ib-category-header {
+  padding: 1rem 1.2rem;
+  background: #f8f9fa;
+  border-bottom: 1px solid #f0f0f0;
+  font-weight: 600;
+  color: #4a4a4a;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Liste des services dans une catégorie */
+.ib-category-services {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Style de la barre de défilement pour WebKit (Chrome, Safari, etc.) */
+.ib-services-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.ib-services-container::-webkit-scrollbar-track {
+  background: #f8f9fa;
+  border-radius: 3px;
+}
+
+.ib-services-container::-webkit-scrollbar-thumb {
+  background-color: #e9aebc;
+  border-radius: 3px;
 }
 
 .ib-service-card-compact {

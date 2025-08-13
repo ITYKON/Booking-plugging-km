@@ -4203,37 +4203,30 @@ body,
   overflow: hidden;
   transition: max-height 0.3s ease;
   background: white;
-  /* Désactiver le défilement par défaut */
-  overflow: hidden;
-  /* Masquer la barre de défilement */
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
-  /* Permettre le défilement programmatique si nécessaire */
-  touch-action: pan-y;
+  /* Permettre le défilement naturel */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   /* Ajouter un peu d'espace en bas pour éviter que le contenu ne soit coupé */
   padding-bottom: 0.5rem;
 }
 
-/* Masquer la barre de défilement pour tous les navigateurs */
-.accordion-content::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
-  background: transparent;
+/* Permettre le défilement naturel sur tous les navigateurs */
+.accordion-content {
+  /* scrollbar-width: auto; Firefox */
+  /* -ms-overflow-style: auto; IE and Edge */
+  scrollbar-width: auto;
+  -ms-overflow-style: auto;
 }
 
 .accordion-item.open .accordion-content {
   /* Hauteur maximale avec défilement masqué */
   max-height: 80vh;
-  /* Permettre le défilement mais masquer la barre */
-  overflow-y: scroll;
+  /* Permettre le défilement naturel */
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  /* Masquer la barre de défilement */
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  scrollbar-color: transparent transparent;
-  /* Désactiver le défilement par défaut */
-  overscroll-behavior: contain;
+  /* Permettre le défilement naturel */
+  -ms-overflow-style: auto;
+  scrollbar-width: auto;
 }
 
 .accordion-item.open .accordion-arrow {
