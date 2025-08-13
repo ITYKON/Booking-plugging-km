@@ -44,6 +44,11 @@
   background-color: #f9fafb;
 }
 
+.accordion-header:active {
+  background-color: #f3f4f6;
+  transform: scale(0.99);
+}
+
 .accordion-category-name {
   font-weight: 600;
   color: #111827;
@@ -153,6 +158,7 @@
 .service-content {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 
 .service-main-info {
@@ -160,6 +166,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
+  width: 100%;
 }
 
 .service-name {
@@ -180,6 +187,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 100%;
 }
 
 .service-duration {
@@ -191,12 +199,24 @@
   background-color: #f3f4f6;
   color: #111827;
   border: none;
-  border-radius: 6px;
-  padding: 6px 12px;
-  font-size: 13px;
-  font-weight: 500;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
+  min-height: 40px;
+  min-width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.service-choose-btn:hover {
+  background-color: #e5e7eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .service-choose-btn:hover {
@@ -212,6 +232,10 @@
     border-radius: 0;
     margin: 0;
     padding: 0;
+  }
+  
+  .accordion-service-item {
+    padding: 16px 16px 16px 0; /* Réduire le padding à droite */
   }
   
   .category-buttons-desktop {
@@ -236,6 +260,16 @@
     border-radius: 12px;
     margin-left: 0;
     margin-right: 0;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+  
+  .accordion-header {
+    padding: 16px; /* Augmenter le padding pour une meilleure zone de clic */
+    border-radius: 12px;
+  }
+  
+  .accordion-content {
+    padding: 0 16px 16px 16px; /* Ajouter du padding à gauche et en bas */
   }
   
   .accordion-header {
