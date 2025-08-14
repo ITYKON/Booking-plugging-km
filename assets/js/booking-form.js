@@ -235,38 +235,45 @@ jQuery(document).ready(function ($) {
     if (!isMobile) return;
     
     setTimeout(() => {
-      // Trouver le conteneur des créneaux
+      // Trouver les éléments importants
       const slotsContainer = document.querySelector('.slots-col, .slots-available');
-      if (!slotsContainer) return;
+      const calendarContainer = document.querySelector('.flatpickr-calendar');
+      const formContainer = document.querySelector('.booking-form-container');
       
-      // Calculer la position pour voir les créneaux sans aller trop bas
-      const slotsRect = slotsContainer.getBoundingClientRect();
-      const scrollPosition = window.pageYOffset + slotsRect.top - 20; // 20px d'espace en haut
+      if (!slotsContainer || !calendarContainer || !formContainer) return;
       
-      // Calculer la position maximale de défilement pour éviter le footer
-      const pageHeight = document.documentElement.scrollHeight;
+      // Calculer les positions
+      const calendarRect = calendarContainer.getBoundingClientRect();
+      const formRect = formContainer.getBoundingClientRect();
       const viewportHeight = window.innerHeight;
-      const maxScroll = pageHeight - viewportHeight - 50; // 50px de marge avant le footer
       
-      // Utiliser la plus petite valeur entre la position calculée et le maximum
-      const finalScrollPosition = Math.min(scrollPosition, maxScroll);
+      // Positionner le haut des créneaux juste en dessous du calendrier
+      const targetScroll = window.pageYOffset + calendarRect.bottom + 10;
       
-      // Désactiver temporairement le smooth scroll pour un défilement précis
+      // Calculer la position maximale pour éviter le footer
+      const maxAllowedScroll = formRect.top + window.pageYOffset + formRect.height - viewportHeight + 20;
+      
+      // Utiliser la plus petite valeur entre la position cible et le maximum autorisé
+      const finalScroll = Math.min(targetScroll, maxAllowedScroll);
+      
+      // Désactiver temporairement le smooth scroll
+      const originalHtmlScroll = document.documentElement.style.scrollBehavior;
+      const originalBodyScroll = document.body.style.scrollBehavior;
       document.documentElement.style.scrollBehavior = 'auto';
       document.body.style.scrollBehavior = 'auto';
       
       // Faire défiler à la position calculée
       window.scrollTo({ 
-        top: finalScrollPosition, 
-        behavior: 'auto' 
+        top: finalScroll,
+        behavior: 'auto'
       });
       
       // Réactiver le smooth scroll après un court délai
       setTimeout(() => {
-        document.documentElement.style.scrollBehavior = 'smooth';
-        document.body.style.scrollBehavior = 'smooth';
+        document.documentElement.style.scrollBehavior = originalHtmlScroll;
+        document.body.style.scrollBehavior = originalBodyScroll;
       }, 100);
-    }, 300); // Petit délai pour laisser le temps au chargement des créneaux
+    }, 150); // Délai légèrement augmenté pour la stabilité
   }
 
   // Écouteur pour le changement de date
